@@ -37,7 +37,7 @@
         app:layout_constraintVertical_bias="0.359" />
 
     <EditText
-        android:id="@+id/sigin_password"
+        android:id="@+id/signin_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/password"
@@ -64,7 +64,7 @@
         app:layout_constraintVertical_bias="0.619" />
 
     <Button
-        android:id="@+id/sigin_daftar"
+        android:id="@+id/signin_signup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/daftar"
