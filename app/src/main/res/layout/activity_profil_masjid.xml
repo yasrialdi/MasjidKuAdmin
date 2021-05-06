@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfilMasjidActivity">
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/profilmasjid_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/profill"
+        android:shadowColor="@color/black" />
+
+        <TextView
+            android:id="@+id/profilmasjid_lengkapiprofil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/profilmasjid_toolbar"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:text="Lengkapi Profil Masjid!"
+            android:textSize="20sp"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/profilmasjid_namamasjid"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@id/profilmasjid_lengkapiprofil"
+            android:text="Nama Masjid"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="15dp"/>
+
+        <EditText
+            android:id="@+id/profilmasjid_editnamamasjid"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_below="@id/profilmasjid_namamasjid"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:layout_marginLeft="29dp"
+            android:layout_marginRight="29dp"/>
+
+        <TextView
+            android:id="@+id/profilmasjid_alamat"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@id/profilmasjid_editnamamasjid"
+            android:text="Alamat"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="15dp"/>
+
+        <EditText
+            android:id="@+id/profilmasjid_editalamatmasjid"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_below="@id/profilmasjid_alamat"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:layout_marginLeft="29dp"
+            android:layout_marginRight="29dp"/>
+
+        <TextView
+            android:id="@+id/profilmasjid_nohp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@id/profilmasjid_editalamatmasjid"
+            android:text="No Telepon / Handphone"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="15dp"/>
+
+        <EditText
+            android:id="@+id/profilmasjid_editnohp"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_below="@id/profilmasjid_nohp"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:layout_marginLeft="29dp"
+            android:layout_marginRight="29dp"/>
+
+        <TextView
+            android:id="@+id/profilmasjid_deskripsi"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@id/profilmasjid_editnohp"
+            android:text="Deskripsi"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="15dp"/>
+
+        <EditText
+            android:id="@+id/profilmasjid_editdeskripsi"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_below="@id/profilmasjid_deskripsi"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:layout_marginLeft="29dp"
+            android:layout_marginRight="29dp"/>
+
+        <TextView
+            android:id="@+id/profilmasjid_fotoprofil"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@id/profilmasjid_editdeskripsi"
+            android:text="Foto Profil Masjid"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="15dp"/>
+
+        <ImageButton
+            android:id="@+id/profilmasjid_btnimageprofil"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_below="@id/profilmasjid_fotoprofil"
+            android:background="@drawable/plus"
+            android:textColor="@color/black"
+            android:layout_marginLeft="29dp"
+            android:layout_marginRight="29dp"/>
+
+        <TextView
+            android:id="@+id/profilmasjid_fotogaleri"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@id/profilmasjid_btnimageprofil"
+            android:text="Foto Profil Masjid"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="15dp"/>
+
+        <ImageButton
+            android:id="@+id/profilmasjid_btnimagegaleri"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_below="@id/profilmasjid_fotogaleri"
+            android:background="@drawable/plus"
+            android:textColor="@color/black"
+            android:layout_marginLeft="29dp"
+            android:layout_marginRight="29dp"/>
+
+        <CheckBox
+            android:id="@+id/profilmasjid_chkbox"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/profilmasjid_btnimagegaleri"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="10dp"
+            android:text="Saya bahwa data diatas sesuai dengan kenyataan sebenarnya"/>
+
+        <Button
+            android:id="@+id/profilmasjid_btnsubmit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/profilmasjid_chkbox"
+            android:background="@drawable/submit"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="50dp"/>
+
+
+    </RelativeLayout>
+
+</ScrollView>

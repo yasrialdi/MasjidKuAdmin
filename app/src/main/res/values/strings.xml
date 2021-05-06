@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MasjidKu - Admin</string>
+    <string name="title_activity_beranda">Map</string>
 </resources>
