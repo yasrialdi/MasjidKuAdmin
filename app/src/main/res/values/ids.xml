@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="profilmasjid_namamasjid" type="id" />
+    <item name="profilmasjid_editnamamasjid" type="id" />
+    <item name="profilmasjid_deskripsi" type="id" />
+    <item name="profilmasjid_toolbar" type="id" />
+    <item name="profilmasjid_lengkapiprofil" type="id" />
+    <item name="profilmasjid_alamat" type="id" />
+    <item name="profilmasjid_editalamatmasjid" type="id" />
+    <item name="profilmasjid_nohp" type="id" />
+    <item name="profilmasjid_editnohp" type="id" />
+    <item name="profilmasjid_editdeskripsi" type="id" />
+    <item name="profilmasjid_fotoprofil" type="id" />
+    <item name="profilmasjid_btnimageprofil" type="id" />
+    <item name="profilmasjid_btnimagegaleri" type="id" />
+    <item name="profilmasjid_fotogaleri" type="id" />
+    <item name="profilmasjid_chkbox" type="id" />
+    <item name="profilmasjid_btnsubmit" type="id" />
+</resources>
