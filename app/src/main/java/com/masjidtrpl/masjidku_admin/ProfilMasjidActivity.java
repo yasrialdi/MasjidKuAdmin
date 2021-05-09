@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -36,8 +37,8 @@ public class ProfilMasjidActivity extends AppCompatActivity {
     EditText name, address, contact, desc;
     CheckBox agree;
 
-    private StorageReference reference;
-    private DatabaseReference databaseReference;
+    StorageReference reference;
+    DatabaseReference databaseReference;
 
     private static final int REQ_CODE_CAMERA = 1;
     private static final int REQ_CODE_GALLERY = 2;
@@ -78,12 +79,12 @@ public class ProfilMasjidActivity extends AppCompatActivity {
                                         imageIntentCamera.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
                                         imageIntentCamera.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
 //                                        intent.setAction(Intent.ACTION_GET_CONTENT);
-                                        startActivityForResult(imageIntentCamera, REQ_CODE_GALLERY);
+                                        startActivityForResult(imageIntentCamera, REQ_CODE_CAMERA);
                                     }
 
                                     @Override
                                     public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
-
+                                        Toast.makeText(ProfilMasjidActivity.this, "Give app permission to camera", Toast.LENGTH_SHORT).show();
                                     }
 
                                     @Override
@@ -109,7 +110,7 @@ public class ProfilMasjidActivity extends AppCompatActivity {
 
                                     @Override
                                     public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
-
+                                        Toast.makeText(ProfilMasjidActivity.this, "Give app permission to gallery", Toast.LENGTH_SHORT).show();
                                     }
 
                                     @Override
