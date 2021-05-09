@@ -58,65 +58,62 @@ public class ProfilMasjidActivity extends AppCompatActivity {
 
     private void getImage(){
         CharSequence[] menu = {"Kamera", "Galeri"};
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this).setTitle("Upload Image").setItems(menu, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which){
-                    case 0:
+        AlertDialog.Builder dialogAlert = new AlertDialog.Builder(this).setTitle("Upload Image").setItems(menu, (dialog, which) -> {
+            switch (which){
+                case 0:
 //                        Intent imageIntentCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 //                        startActivityForResult(imageIntentCamera, REQ_CODE_CAMERA);
-                        Dexter.withContext(getApplicationContext()).withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-                                .withListener(new PermissionListener() {
-                                    @Override
-                                    public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
-                                        Intent imageIntentCamera = new Intent();
-                                        imageIntentCamera.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
-                                        imageIntentCamera.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+                    Dexter.withContext(getApplicationContext()).withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                            .withListener(new PermissionListener() {
+                                @Override
+                                public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+                                    Intent imageIntentCamera = new Intent();
+                                    imageIntentCamera.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
+                                    imageIntentCamera.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
 //                                        intent.setAction(Intent.ACTION_GET_CONTENT);
-                                        startActivityForResult(imageIntentCamera, REQ_CODE_CAMERA);
-                                    }
+                                    startActivityForResult(imageIntentCamera, REQ_CODE_CAMERA);
+                                }
 
-                                    @Override
-                                    public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
-                                        Toast.makeText(ProfilMasjidActivity.this, "Give app permission to camera", Toast.LENGTH_SHORT).show();
-                                    }
+                                @Override
+                                public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+                                    Toast.makeText(ProfilMasjidActivity.this, "Give app permission to camera", Toast.LENGTH_SHORT).show();
+                                }
 
-                                    @Override
-                                    public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
-                                        permissionToken.continuePermissionRequest();
-                                    }
-                                }).check();
-                        break;
-                    case 1:
+                                @Override
+                                public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+                                    permissionToken.continuePermissionRequest();
+                                }
+                            }).check();
+                    break;
+                case 1:
 //                        Intent imageIntentGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 //                        startActivityForResult(imageIntentGallery, REQ_CODE_GALLERY);
-                        Dexter.withContext(getApplicationContext()).withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-                                .withListener(new PermissionListener() {
-                                    @Override
-                                    public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
-                                        Intent imageIntentGallery = new Intent();
-                                        imageIntentGallery.setType("image/*");
-                                        imageIntentGallery.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
-                                        imageIntentGallery.putExtra(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    Dexter.withContext(getApplicationContext()).withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                            .withListener(new PermissionListener() {
+                                @Override
+                                public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+                                    Intent imageIntentGallery = new Intent();
+                                    imageIntentGallery.setType("image/*");
+                                    imageIntentGallery.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
+                                    imageIntentGallery.putExtra(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 //                                        intent.setAction(Intent.ACTION_GET_CONTENT);
-                                        startActivityForResult(Intent.createChooser(imageIntentGallery,"Please Select Multiple Files"), REQ_CODE_GALLERY);
-                                    }
+                                    startActivityForResult(Intent.createChooser(imageIntentGallery,"Please Select Multiple Files"), REQ_CODE_GALLERY);
+                                }
 
-                                    @Override
-                                    public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
-                                        Toast.makeText(ProfilMasjidActivity.this, "Give app permission to gallery", Toast.LENGTH_SHORT).show();
-                                    }
+                                @Override
+                                public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+                                    Toast.makeText(ProfilMasjidActivity.this, "Give app permission to gallery", Toast.LENGTH_SHORT).show();
+                                }
 
-                                    @Override
-                                    public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
-                                        permissionToken.continuePermissionRequest();
-                                    }
-                                }).check();
-                        break;
-                }
+                                @Override
+                                public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+                                    permissionToken.continuePermissionRequest();
+                                }
+                            }).check();
+                    break;
             }
         });
-        dialog.create();
-        dialog.show();
+        dialogAlert.create();
+        dialogAlert.show();
     }
 }
