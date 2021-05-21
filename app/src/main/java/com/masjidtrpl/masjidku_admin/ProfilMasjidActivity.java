@@ -2,7 +2,6 @@ package com.masjidtrpl.masjidku_admin;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -33,7 +32,6 @@ import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
-import com.masjidtrpl.masjidku_admin.utils.FileUtil;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
