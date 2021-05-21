@@ -44,7 +44,6 @@ public class ProfilMasjidActivity extends AppCompatActivity {
     ImageView galery, selectedImage;
     EditText name, address, contact, desc;
     CheckBox agree;
-    List<Uri> files = new ArrayList<>();
 
     StorageReference reference;
     DatabaseReference databaseReference;
