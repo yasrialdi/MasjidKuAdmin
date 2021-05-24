@@ -21,6 +21,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -47,6 +48,7 @@ public class ProfilMasjidActivity extends AppCompatActivity {
 
     StorageReference reference;
     DatabaseReference databaseReference;
+    FirebaseAuth auth;
 
     private static final int REQ_CODE_CAMERA = 1;
     private static final int REQ_CODE_GALLERY = 2;
@@ -64,10 +66,9 @@ public class ProfilMasjidActivity extends AppCompatActivity {
         login = findViewById(R.id.profilmasjid_btnsubmit);
         agree = findViewById(R.id.profilmasjid_chkbox);
 
+        auth = FirebaseAuth.getInstance();
         reference = FirebaseStorage.getInstance().getReference();
         databaseReference = FirebaseDatabase.getInstance().getReference();
-
-
     }
 
     private void getImage(){
@@ -87,12 +88,10 @@ public class ProfilMasjidActivity extends AppCompatActivity {
 //                                        intent.setAction(Intent.ACTION_GET_CONTENT);
                                     startActivityForResult(imageIntentCamera, REQ_CODE_CAMERA);
                                 }
-
                                 @Override
                                 public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
                                     Toast.makeText(ProfilMasjidActivity.this, "Give app permission to camera", Toast.LENGTH_SHORT).show();
                                 }
-
                                 @Override
                                 public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
                                     permissionToken.continuePermissionRequest();
@@ -113,12 +112,10 @@ public class ProfilMasjidActivity extends AppCompatActivity {
 //                                        intent.setAction(Intent.ACTION_GET_CONTENT);
                                     startActivityForResult(Intent.createChooser(imageIntentGallery,"Please Select Multiple Files"), REQ_CODE_GALLERY);
                                 }
-
                                 @Override
                                 public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
                                     Toast.makeText(ProfilMasjidActivity.this, "Give app permission to gallery", Toast.LENGTH_SHORT).show();
                                 }
-
                                 @Override
                                 public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
                                     permissionToken.continuePermissionRequest();
@@ -161,18 +158,27 @@ public class ProfilMasjidActivity extends AppCompatActivity {
     public void uploadImage(Intent data){
         if(data.getClipData() != null){
             int totalItemsSelected = data.getClipData().getItemCount();
+            String getUserID = auth.getCurrentUser().getUid();
 
             for(int i = 0; i < totalItemsSelected; i++){
                 Uri fileUri = data.getClipData().getItemAt(i).getUri();
                 String fileName = getFileName(fileUri);
+                String pathFile = "Admin/"+getUserID+"/Image/"+fileName;
 
-                StorageReference fileToUpload = reference.child("Images").child(fileName);
+                StorageReference fileToUpload = reference.child(pathFile);
 
                 final int finalI = i;
                 fileToUpload.putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Toast.makeText(ProfilMasjidActivity.this, "Upload File "+finalI+" Berhasil", Toast.LENGTH_LONG).show();
+                        reference.child(pathFile).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                String url = uri.toString();
+                                databaseReference.child("Admin/"+getUserID+"/ImageUrl").push().setValue(new ModelsImage(url));
+                                Toast.makeText(ProfilMasjidActivity.this, "Upload File "+finalI+" Berhasil", Toast.LENGTH_LONG).show();
+                            }
+                        });
                     }
                 });
 
