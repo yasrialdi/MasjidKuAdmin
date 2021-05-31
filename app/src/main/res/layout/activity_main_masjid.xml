@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainMasjidActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/mainmasjid_fotokegiatan"
+            android:layout_width="300dp"
+            android:layout_height="150dp"
+            android:background="@drawable/fotokegiatan"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="20dp"/>
+
+        <ImageButton
+            android:id="@+id/mainmasjid_tambahkegiatan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/mainmasjid_fotokegiatan"
+            android:background="@drawable/tambahkegiatan"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="60dp"/>
+
+        <ImageButton
+            android:id="@+id/mainmasjid_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/mainmasjid_fotokegiatan"
+            android:layout_toRightOf="@id/mainmasjid_tambahkegiatan"
+            android:background="@drawable/review"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="79dp"/>
+
+        <ImageButton
+            android:id="@+id/mainmasjid_izinpenggunaan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/mainmasjid_tambahkegiatan"
+            android:background="@drawable/izinpenggunaan"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="60dp"/>
+
+        <ImageButton
+            android:id="@+id/mainmasjid_laporankeuangan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/mainmasjid_tambahkegiatan"
+            android:layout_toRightOf="@id/mainmasjid_izinpenggunaan"
+            android:background="@drawable/laporankeuangan"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="79dp"/>
+
+
+    </RelativeLayout>
+
+</ScrollView>
