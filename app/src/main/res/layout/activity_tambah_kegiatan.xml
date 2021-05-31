@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TambahKegiatanActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tambahkegiatan_txt"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Tambahkan Kegiatan Masjid Anda Agar Dapat Dilihat Jemaah"
+            android:textSize="20sp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/tambahkegiatan_judulkegiatan"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@id/tambahkegiatan_txt"
+            android:text="Judul Kegiatan"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="15dp"/>
+
+        <EditText
+            android:id="@+id/tambahkegiatan_editnajudulkegiatan"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_below="@id/tambahkegiatan_judulkegiatan"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:layout_marginLeft="29dp"
+            android:layout_marginRight="29dp"/>
+
+        <TextView
+            android:id="@+id/tambahkegiatan_deskripsi"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@id/tambahkegiatan_editnajudulkegiatan"
+            android:text="Deskripsi"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="15dp"/>
+
+        <EditText
+            android:id="@+id/tambahkegiatan_editdeskripsi"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_below="@id/tambahkegiatan_deskripsi"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:layout_marginLeft="29dp"
+            android:layout_marginRight="29dp"/>
+
+        <TextView
+            android:id="@+id/tambahkegiatan_fotokegiatantxt"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@id/tambahkegiatan_editdeskripsi"
+            android:text="Foto Kegiatan Masjid"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="15dp"/>
+
+        <ImageButton
+            android:id="@+id/tambahkegiatan_fotokegiatan"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_below="@id/tambahkegiatan_fotokegiatantxt"
+            android:background="@drawable/plus"
+            android:textColor="@color/black"
+            android:layout_marginLeft="29dp"
+            android:layout_marginRight="29dp"
+            android:layout_marginTop="20dp"/>
+
+        <Button
+            android:id="@+id/tambahkegiatan_btnsubmit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tambahkegiatan_fotokegiatan"
+            android:background="@drawable/submit"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="50dp"/>
+
+
+    </RelativeLayout>
+
+
+</ScrollView>
