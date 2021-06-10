@@ -150,7 +150,7 @@
             android:id="@+id/addimage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp"
             android:layout_below="@id/profilmasjid_fotogaleri">
             <LinearLayout
                 android:id="@+id/parent_linear_layout"
@@ -188,7 +188,7 @@
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/addimage"
-            android:layout_marginLeft="25dp"
+            android:layout_marginStart="25dp"
             android:layout_marginTop="10dp"
             android:text="Saya bahwa data diatas sesuai dengan kenyataan sebenarnya"/>
 
@@ -198,7 +198,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/profilmasjid_chkbox"
             android:background="@drawable/submit"
-            android:layout_marginLeft="25dp"
+            android:layout_marginStart="25dp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="50dp"/>
 
