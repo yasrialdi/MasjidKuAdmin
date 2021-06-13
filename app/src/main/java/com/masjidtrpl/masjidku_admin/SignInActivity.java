@@ -45,7 +45,7 @@ public class SignInActivity extends AppCompatActivity {
         listener = firebaseAuth -> {
             FirebaseUser user = firebaseAuth.getCurrentUser();
             if (user != null){
-                startActivity(new Intent(SignInActivity.this, MainActivity.class));
+                startActivity(new Intent(SignInActivity.this, MainMasjidActivity.class));
                 finish();
             }
         };

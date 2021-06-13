@@ -93,7 +93,7 @@ public class TambahKegiatanActivity extends AppCompatActivity {
             for(int i = 0; i < totalItemsSelected; i++){
                 Uri fileUri = data.getClipData().getItemAt(i).getUri();
                 String fileName = getFileName(fileUri);
-                String pathFile = "Admin/"+getUserID+"/Image/"+fileName;
+                String pathFile = "Admin/"+getUserID+"/Image/Kegiatan/"+fileName;
 
                 StorageReference fileToUpload = reference.child(pathFile);
 
