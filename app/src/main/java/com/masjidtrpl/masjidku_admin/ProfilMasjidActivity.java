@@ -10,11 +10,14 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -50,6 +53,7 @@ public class ProfilMasjidActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
     FirebaseAuth auth;
 
+    private LinearLayout parentLinearLayout;
     private static final int REQ_CODE_CAMERA = 1;
     private static final int REQ_CODE_GALLERY = 2;
 
@@ -69,10 +73,28 @@ public class ProfilMasjidActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         reference = FirebaseStorage.getInstance().getReference();
         databaseReference = FirebaseDatabase.getInstance().getReference();
+
+        galery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addImage();
+            }
+        });
     }
 
-    private void getImage(){
-        CharSequence[] menu = {"Kamera", "Galeri"};
+    public void addImage() {
+        LayoutInflater inflater=(LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View rowView=inflater.inflate(R.layout.image, null);
+        // Add the new row before the add field button.
+        parentLinearLayout.addView(rowView, parentLinearLayout.getChildCount() - 1);
+        parentLinearLayout.isFocusable();
+
+        selectedImage = rowView.findViewById(R.id.number_edit_text);
+        getImage(ProfilMasjidActivity.this);
+    }
+
+    private void getImage(Context context){
+        CharSequence[] menu = {"Kamera", "Galeri", "Kembali"};
         AlertDialog.Builder dialogAlert = new AlertDialog.Builder(this).setTitle("Upload Image").setItems(menu, (dialog, which) -> {
             switch (which){
                 case 0:
@@ -121,6 +143,9 @@ public class ProfilMasjidActivity extends AppCompatActivity {
                                     permissionToken.continuePermissionRequest();
                                 }
                             }).check();
+                    break;
+                case 2:
+                    dialog.dismiss();
                     break;
             }
         });

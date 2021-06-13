@@ -168,8 +168,7 @@
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:src="@android:drawable/ic_input_add"
-                        android:background="@android:color/background_light"
-                        android:inputType="phone"/>
+                        android:background="@android:color/background_light"/>
                 </LinearLayout>
             </LinearLayout>
         </HorizontalScrollView>
