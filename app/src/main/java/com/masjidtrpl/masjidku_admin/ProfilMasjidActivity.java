@@ -112,12 +112,14 @@ public class ProfilMasjidActivity extends AppCompatActivity {
         String kontak = contact.getText().toString();
         String deskripsi = desc.getText().toString();
 
-        databaseReference.child("Admin").child(auth.getCurrentUser().getUid()).child("Profil Masjid")
+        databaseReference.child("Admin").child(auth.getCurrentUser().getUid()).child("ProfilMasjid")
                 .setValue(new ModelsProfile(nama, alamat, kontak, deskripsi))
                 .addOnSuccessListener(this, new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Toast.makeText(ProfilMasjidActivity.this, "Data berhasil disimpan", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(ProfilMasjidActivity.this, MainMasjidActivity.class));
+                finish();
             }
         });
     }
@@ -241,7 +243,7 @@ public class ProfilMasjidActivity extends AppCompatActivity {
             for(int i = 0; i < totalItemsSelected; i++){
                 Uri fileUri = data.getClipData().getItemAt(i).getUri();
                 String fileName = getFileName(fileUri);
-                String pathFile = "Admin/"+getUserID+"/Image/"+fileName;
+                String pathFile = "Admin/"+getUserID+"/ProfilMasjid/Image/"+fileName;
 
                 StorageReference fileToUpload = reference.child(pathFile);
 
@@ -253,8 +255,12 @@ public class ProfilMasjidActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(Uri uri) {
                                 String url = uri.toString();
-                                databaseReference.child("Admin/"+getUserID+"/ImageUrl").push().setValue(new ModelsImage(url));
-                                Toast.makeText(ProfilMasjidActivity.this, "Upload File "+finalI+" Berhasil", Toast.LENGTH_LONG).show();
+                                if (cekImage==0){
+                                    databaseReference.child("Admin/"+getUserID+"/ProfilMasjid/ImagePPUrl").setValue(new ModelsImage(url));
+                                } else if (cekImage==1){
+                                    databaseReference.child("Admin/"+getUserID+"/ProfilMasjid/ImageGaleiUrl").setValue(new ModelsImage(url));
+                                }
+                                Toast.makeText(ProfilMasjidActivity.this, "Upload File "+finalI+" Berhasil", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }

@@ -13,8 +13,13 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -36,10 +41,15 @@ import java.io.ByteArrayOutputStream;
 
 public class TambahKegiatanActivity extends AppCompatActivity {
     EditText judul, deskripsi;
-    ImageButton foto;
+    ImageView foto, selectedImage;
+    Button submit;
     FirebaseAuth auth;
     DatabaseReference databaseReference;
     StorageReference reference;
+
+    Intent dataImage;
+
+    private LinearLayout parentLinearLayout;
     private static final int REQ_CODE_CAMERA = 1;
     private static final int REQ_CODE_GALLERY = 2;
 
@@ -50,12 +60,53 @@ public class TambahKegiatanActivity extends AppCompatActivity {
         judul = findViewById(R.id.tambahkegiatan_editnajudulkegiatan);
         deskripsi = findViewById(R.id.tambahkegiatan_editdeskripsi);
         foto = findViewById(R.id.tambahkegiatan_fotokegiatan);
+        submit = findViewById(R.id.tambahkegiatan_btnsubmit);
 
         auth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
         reference = FirebaseStorage.getInstance().getReference();
 
+        foto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addImage();
+            }
+        });
 
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                uploadImage(dataImage);
+                detail();
+            }
+        });
+    }
+
+    private void detail(){
+        String title = judul.getText().toString();
+        String desc = deskripsi.getText().toString();
+
+        databaseReference.child("Admin").child(auth.getCurrentUser().getUid()).child("Kegiatan")
+                .setValue(new ModelsKegiatan(title, desc))
+                .addOnSuccessListener(this, new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Toast.makeText(TambahKegiatanActivity.this, "Data berhasil disimpan", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(TambahKegiatanActivity.this, MainMasjidActivity.class));
+                finish();
+            }
+        });
+    }
+
+    public void addImage() {
+        LayoutInflater inflater=(LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View rowView=inflater.inflate(R.layout.image, null);
+        // Add the new row before the add field button.
+        parentLinearLayout.addView(rowView, parentLinearLayout.getChildCount() - 1);
+        parentLinearLayout.isFocusable();
+
+        selectedImage = rowView.findViewById(R.id.number_edit_text);
+        getImage(TambahKegiatanActivity.this);
     }
 
     @Override
@@ -68,8 +119,8 @@ public class TambahKegiatanActivity extends AppCompatActivity {
                         Bitmap img = (Bitmap) data.getExtras().get("data");
                         foto.setImageBitmap(img);
                         Picasso.get().load(getImageUri(TambahKegiatanActivity.this,img)).into(foto);
-
-                        uploadImage(data);
+                        dataImage = data;
+//                        uploadImage(data);
                     }
 
                     break;
@@ -77,8 +128,8 @@ public class TambahKegiatanActivity extends AppCompatActivity {
                     if (resultCode == RESULT_OK && data != null) {
                         Uri img = data.getData();
                         Picasso.get().load(img).into(foto);
-
-                        uploadImage(data);
+                        dataImage = data;
+//                        uploadImage(data);
                     }
                     break;
             }
@@ -93,7 +144,7 @@ public class TambahKegiatanActivity extends AppCompatActivity {
             for(int i = 0; i < totalItemsSelected; i++){
                 Uri fileUri = data.getClipData().getItemAt(i).getUri();
                 String fileName = getFileName(fileUri);
-                String pathFile = "Admin/"+getUserID+"/Image/Kegiatan/"+fileName;
+                String pathFile = "Admin/"+getUserID+"/Kegiatan/Image"+fileName;
 
                 StorageReference fileToUpload = reference.child(pathFile);
 
@@ -105,7 +156,7 @@ public class TambahKegiatanActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(Uri uri) {
                                 String url = uri.toString();
-                                databaseReference.child("Admin/"+getUserID+"/ImageUrl").push().setValue(new ModelsImage(url));
+                                databaseReference.child("Admin/"+getUserID+"/Kegiatan/ImageUrl").push().setValue(new ModelsImage(url));
                                 Toast.makeText(TambahKegiatanActivity.this, "Upload File "+finalI+" Berhasil", Toast.LENGTH_LONG).show();
                             }
                         });
@@ -150,8 +201,8 @@ public class TambahKegiatanActivity extends AppCompatActivity {
         return result;
     }
 
-    private void getImage(){
-        CharSequence[] menu = {"Kamera", "Galeri"};
+    private void getImage(Context context){
+        CharSequence[] menu = {"Kamera", "Galeri", "Kembali"};
         AlertDialog.Builder dialogAlert = new AlertDialog.Builder(this).setTitle("Upload Image").setItems(menu, (dialog, which) -> {
             switch (which){
                 case 0:
@@ -200,6 +251,9 @@ public class TambahKegiatanActivity extends AppCompatActivity {
                                     permissionToken.continuePermissionRequest();
                                 }
                             }).check();
+                    break;
+                case 3:
+                    dialog.dismiss();
                     break;
             }
         });
