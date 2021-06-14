@@ -156,7 +156,7 @@ public class TambahKegiatanActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(Uri uri) {
                                 String url = uri.toString();
-                                databaseReference.child("Admin/"+getUserID+"/Kegiatan/ImageUrl").push().setValue(new ModelsImage(url));
+                                databaseReference.child("Admin/"+getUserID+"/Kegiatan/ImageUrl").setValue(new ModelsImage(url));
                                 Toast.makeText(TambahKegiatanActivity.this, "Upload File "+finalI+" Berhasil", Toast.LENGTH_LONG).show();
                             }
                         });
