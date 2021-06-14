@@ -48,6 +48,7 @@ public class ProfilMasjidActivity extends AppCompatActivity {
     ImageView galery, selectedImage;
     EditText name, address, contact, desc;
     CheckBox agree;
+    Intent data;
 
     StorageReference reference;
     DatabaseReference databaseReference;
@@ -78,6 +79,13 @@ public class ProfilMasjidActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 addImage();
+            }
+        });
+
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                uploadImage(data);
             }
         });
     }
