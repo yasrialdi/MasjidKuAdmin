@@ -43,12 +43,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProfilMasjidActivity extends AppCompatActivity {
-    Button login;
-    ImageButton profile;
-    ImageView galery, selectedImage;
+    Button submit;
+    ImageView galery, selectedImage, profile;
     EditText name, address, contact, desc;
     CheckBox agree;
-    Intent data;
+    Intent dataImageGalery, dataImageProfile;
+    int cekImage;
 
     StorageReference reference;
     DatabaseReference databaseReference;
@@ -68,7 +68,7 @@ public class ProfilMasjidActivity extends AppCompatActivity {
         desc = findViewById(R.id.profilmasjid_editdeskripsi);
         profile = findViewById(R.id.profilmasjid_btnimageprofil);
         galery = findViewById(R.id.profilmasjid_btnimagegaleri);
-        login = findViewById(R.id.profilmasjid_btnsubmit);
+        submit = findViewById(R.id.profilmasjid_btnsubmit);
         agree = findViewById(R.id.profilmasjid_chkbox);
 
         auth = FirebaseAuth.getInstance();
@@ -78,14 +78,46 @@ public class ProfilMasjidActivity extends AppCompatActivity {
         galery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                cekImage = 1;
                 addImage();
             }
         });
 
-        login.setOnClickListener(new View.OnClickListener() {
+        profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                uploadImage(data);
+                cekImage = 0;
+                getImage(ProfilMasjidActivity.this);
+            }
+        });
+
+        if (agree.isChecked()){
+            submit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    uploadImage(dataImageProfile);
+                    uploadImage(dataImageGalery);
+                    detail();
+                }
+            });
+        } else{
+            Toast.makeText(ProfilMasjidActivity.this, "Data sudah benar?", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    private void detail(){
+        String nama = name.getText().toString();
+        String alamat = address.getText().toString();
+        String kontak = contact.getText().toString();
+        String deskripsi = desc.getText().toString();
+
+        databaseReference.child("Admin").child(auth.getCurrentUser().getUid()).child("Profil Masjid")
+                .setValue(new ModelsProfile(nama, alamat, kontak, deskripsi))
+                .addOnSuccessListener(this, new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Toast.makeText(ProfilMasjidActivity.this, "Data berhasil disimpan", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -137,10 +169,12 @@ public class ProfilMasjidActivity extends AppCompatActivity {
                                 public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
                                     Intent imageIntentGallery = new Intent();
                                     imageIntentGallery.setType("image/*");
-                                    imageIntentGallery.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
+                                    if (cekImage==1){
+                                        imageIntentGallery.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
+                                    }
                                     imageIntentGallery.putExtra(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 //                                        intent.setAction(Intent.ACTION_GET_CONTENT);
-                                    startActivityForResult(Intent.createChooser(imageIntentGallery,"Please Select Multiple Files"), REQ_CODE_GALLERY);
+                                    startActivityForResult(Intent.createChooser(imageIntentGallery,"Please Select Image"), REQ_CODE_GALLERY);
                                 }
                                 @Override
                                 public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
@@ -169,19 +203,30 @@ public class ProfilMasjidActivity extends AppCompatActivity {
                 case REQ_CODE_CAMERA:
                     if (resultCode == RESULT_OK && data != null) {
                         Bitmap img = (Bitmap) data.getExtras().get("data");
-                        selectedImage.setImageBitmap(img);
-                        Picasso.get().load(getImageUri(ProfilMasjidActivity.this,img)).into(selectedImage);
-
-                        uploadImage(data);
+                        if (cekImage==1){
+                            selectedImage.setImageBitmap(img);
+                            Picasso.get().load(getImageUri(ProfilMasjidActivity.this,img)).into(selectedImage);
+                            dataImageGalery = data;
+                        } else if (cekImage==0){
+                            profile.setImageBitmap(img);
+                            Picasso.get().load(getImageUri(ProfilMasjidActivity.this,img)).into(profile);
+                            dataImageProfile = data;
+                        }
+//                        uploadImage(data);
                     }
 
                     break;
                 case REQ_CODE_GALLERY:
                     if (resultCode == RESULT_OK && data != null) {
                         Uri img = data.getData();
-                        Picasso.get().load(img).into(selectedImage);
-
-                        uploadImage(data);
+                        if (cekImage==1){
+                            Picasso.get().load(img).into(selectedImage);
+                            dataImageGalery = data;
+                        } else if (cekImage==0){
+                            Picasso.get().load(img).into(profile);
+                            dataImageProfile = data;
+                        }
+//                        uploadImage(data);
                     }
                     break;
             }
