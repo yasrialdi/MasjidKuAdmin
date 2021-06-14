@@ -18,6 +18,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Collections;
 
@@ -26,6 +31,7 @@ public class SignInActivity extends AppCompatActivity {
     private EditText user, pass;
     private FirebaseAuth auth;
     private FirebaseAuth.AuthStateListener listener;
+    private DatabaseReference reference;
     private String getEmail, getPass;
 
     private final int RC_SIGN_IN = 1;
@@ -41,14 +47,15 @@ public class SignInActivity extends AppCompatActivity {
         pass = findViewById(R.id.signin_password);
 
         auth = FirebaseAuth.getInstance();
+        reference = FirebaseDatabase.getInstance().getReference();
 
-        listener = firebaseAuth -> {
-            FirebaseUser user = firebaseAuth.getCurrentUser();
-            if (user != null){
-                startActivity(new Intent(SignInActivity.this, MainMasjidActivity.class));
-                finish();
-            }
-        };
+//        listener = firebaseAuth -> {
+//            FirebaseUser user = firebaseAuth.getCurrentUser();
+//            if (user != null){
+//                startActivity(new Intent(SignInActivity.this, MainMasjidActivity.class));
+//                finish();
+//            }
+//        };
 
         register.setOnClickListener(v -> {
             startActivity(new Intent(SignInActivity.this, SignUpActivity.class));
@@ -77,8 +84,27 @@ public class SignInActivity extends AppCompatActivity {
         // RC_SIGN_IN adalah kode permintaan yang Anda berikan ke startActivityForResult, saat memulai masuknya arus.
         if (requestCode == RC_SIGN_IN){
             if (resultCode == RESULT_OK){
+                reference.child("Admin").child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        ModelsName name = snapshot.getValue(ModelsName.class);
+                        assert name != null;
+                        if (name.getName().equals(auth.getCurrentUser().getDisplayName())){
+                            Toast.makeText(SignInActivity.this, "Login Berhasil", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(SignInActivity.this, MainMasjidActivity.class));
+                            finish();
+                        } else{
+                            startActivity(new Intent(SignInActivity.this, SignUpActivity.class));
+                            finish();
+                        }
+                    }
 
-                Toast.makeText(SignInActivity.this, "Login Berhasil", Toast.LENGTH_SHORT).show();
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+//                Toast.makeText(SignInActivity.this, "Login Berhasil", Toast.LENGTH_SHORT).show();
 //                startActivity(new Intent());
             } else{
                 Toast.makeText(SignInActivity.this, "Login Dibatalkan", Toast.LENGTH_SHORT).show();
@@ -91,25 +117,27 @@ public class SignInActivity extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()){
                         Toast.makeText(SignInActivity.this, "Login Succes", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(SignInActivity.this, MainMasjidActivity.class));
+                        finish();
                     } else{
-                        Toast.makeText(SignInActivity.this, "Tidak dapat login", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SignInActivity.this, "Tidak dapat login, data user tidak ada", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        auth.addAuthStateListener(listener);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (listener != null){
-            auth.removeAuthStateListener(listener);
-        }
-    }
+//
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        auth.addAuthStateListener(listener);
+//    }
+//
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//        if (listener != null){
+//            auth.removeAuthStateListener(listener);
+//        }
+//    }
 
     private boolean isEmpty(String s){
         return TextUtils.isEmpty(s);
