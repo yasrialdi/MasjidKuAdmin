@@ -77,6 +77,7 @@ public class SignInActivity extends AppCompatActivity {
         // RC_SIGN_IN adalah kode permintaan yang Anda berikan ke startActivityForResult, saat memulai masuknya arus.
         if (requestCode == RC_SIGN_IN){
             if (resultCode == RESULT_OK){
+
                 Toast.makeText(SignInActivity.this, "Login Berhasil", Toast.LENGTH_SHORT).show();
 //                startActivity(new Intent());
             } else{

@@ -12,11 +12,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Objects;
 
 public class SignUpActivity extends AppCompatActivity {
     EditText user,email,pass,pass1;
@@ -71,6 +74,8 @@ public class SignUpActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
+                            reference.child("Admin").child(auth.getCurrentUser().getUid()).setValue(Objects.requireNonNull(auth.getCurrentUser()).getDisplayName());
+//                            saveUsername();
                             Toast.makeText(SignUpActivity.this, "Sign Up Berhasil", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(SignUpActivity.this, TambahKegiatanActivity.class));
                             finish();
@@ -80,6 +85,16 @@ public class SignUpActivity extends AppCompatActivity {
                     }
                 });
     }
+
+//    private void saveUsername(){
+//        reference.child("Admin").push().setValue(Objects.requireNonNull(auth.getCurrentUser()).getDisplayName())
+//                .addOnSuccessListener(new OnSuccessListener<Void>() {
+//            @Override
+//            public void onSuccess(Void unused) {
+//                Toast.makeText(SignUpActivity.this, "Success", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
 
     private boolean isEmpty(String s){
         return TextUtils.isEmpty(s);
