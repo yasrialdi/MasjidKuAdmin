@@ -140,30 +140,33 @@ public class TambahKegiatanActivity extends AppCompatActivity {
         if(data.getClipData() != null){
             int totalItemsSelected = data.getClipData().getItemCount();
             String getUserID = auth.getCurrentUser().getUid();
+            if (totalItemsSelected < 4){
+                for(int i = 0; i < totalItemsSelected; i++){
+                    Uri fileUri = data.getClipData().getItemAt(i).getUri();
+                    String fileName = getFileName(fileUri);
+                    String pathFile = "Admin/"+getUserID+"/Kegiatan/Image"+fileName;
 
-            for(int i = 0; i < totalItemsSelected; i++){
-                Uri fileUri = data.getClipData().getItemAt(i).getUri();
-                String fileName = getFileName(fileUri);
-                String pathFile = "Admin/"+getUserID+"/Kegiatan/Image"+fileName;
+                    StorageReference fileToUpload = reference.child(pathFile);
 
-                StorageReference fileToUpload = reference.child(pathFile);
-
-                final int finalI = i;
-                fileToUpload.putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        reference.child(pathFile).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-                                String url = uri.toString();
-                                databaseReference.child("Admin/"+getUserID+"/Kegiatan/ImageUrl").setValue(new ModelsImage(url));
-                                Toast.makeText(TambahKegiatanActivity.this, "Upload File "+finalI+" Berhasil", Toast.LENGTH_LONG).show();
-                            }
-                        });
-                    }
-                });
-
+                    final int finalI = i;
+                    fileToUpload.putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            reference.child(pathFile).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    String url = uri.toString();
+                                    databaseReference.child("Admin/"+getUserID+"/Kegiatan/ImageUrl").setValue(new ModelsImage(url));
+                                    Toast.makeText(TambahKegiatanActivity.this, "Upload File "+finalI+" Berhasil", Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        }
+                    });
+                }
+            } else{
+                Toast.makeText(this, "Image tidak boleh dari 3", Toast.LENGTH_SHORT).show();
             }
+
             //Toast.makeText(MainActivity.this, "Selected Multiple Files", Toast.LENGTH_SHORT).show();
         } else if (data.getData() != null){
             Toast.makeText(TambahKegiatanActivity.this, "Selected Single File", Toast.LENGTH_SHORT).show();
