@@ -1,6 +1,7 @@
 package com.masjidtrpl.masjidku_admin;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +11,7 @@ import android.widget.ImageView;
 
 public class MainMasjidActivity extends AppCompatActivity {
     ImageButton tambah, review, izin, laporan;
-    ImageView kegiatan;
+    RecyclerView kegiatan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
