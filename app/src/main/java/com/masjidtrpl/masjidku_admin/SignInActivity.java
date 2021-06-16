@@ -62,7 +62,8 @@ public class SignInActivity extends AppCompatActivity {
             finish();
         });
 
-        google.setOnClickListener(v -> startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder()
+        google.setOnClickListener(v ->
+                startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder()
                 .setAvailableProviders(Collections.singletonList(new AuthUI.IdpConfig.GoogleBuilder().build()))
                 .setIsSmartLockEnabled(false).build(),RC_SIGN_IN));
 
@@ -84,7 +85,7 @@ public class SignInActivity extends AppCompatActivity {
         // RC_SIGN_IN adalah kode permintaan yang Anda berikan ke startActivityForResult, saat memulai masuknya arus.
         if (requestCode == RC_SIGN_IN){
             if (resultCode == RESULT_OK){
-                reference.child("Admin").child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+                reference.child("Admin").child(auth.getCurrentUser().getUid()).child("Nama").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         ModelsName name = snapshot.getValue(ModelsName.class);
@@ -104,6 +105,7 @@ public class SignInActivity extends AppCompatActivity {
 
                     }
                 });
+
 //                Toast.makeText(SignInActivity.this, "Login Berhasil", Toast.LENGTH_SHORT).show();
 //                startActivity(new Intent());
             } else{

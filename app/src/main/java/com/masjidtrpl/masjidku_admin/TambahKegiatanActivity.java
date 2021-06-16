@@ -48,6 +48,7 @@ public class TambahKegiatanActivity extends AppCompatActivity {
     StorageReference reference;
 
     Intent dataImage;
+    String[] url = new String[3];
 
     private LinearLayout parentLinearLayout;
     private static final int REQ_CODE_CAMERA = 1;
@@ -85,9 +86,12 @@ public class TambahKegiatanActivity extends AppCompatActivity {
     private void detail(){
         String title = judul.getText().toString();
         String desc = deskripsi.getText().toString();
+        String url1 = url[0].toString();
+        String url2 = url[1].toString();
+        String url3 = url[2].toString();
 
         databaseReference.child("Admin").child(auth.getCurrentUser().getUid()).child("Kegiatan")
-                .setValue(new ModelsKegiatan(title, desc))
+                .setValue(new ModelsKegiatan(title, desc, url1, url2, url3))
                 .addOnSuccessListener(this, new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
@@ -155,9 +159,9 @@ public class TambahKegiatanActivity extends AppCompatActivity {
                             reference.child(pathFile).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-                                    String url = uri.toString();
-                                    databaseReference.child("Admin/"+getUserID+"/Kegiatan/ImageUrl").setValue(new ModelsImage(url));
-                                    Toast.makeText(TambahKegiatanActivity.this, "Upload File "+finalI+" Berhasil", Toast.LENGTH_LONG).show();
+                                    url[finalI] = uri.toString();
+//                                    databaseReference.child("Admin/"+getUserID+"/Kegiatan/ImageUrl").setValue(new ModelsImage(url));
+//                                    Toast.makeText(TambahKegiatanActivity.this, "Upload File "+finalI+" Berhasil", Toast.LENGTH_LONG).show();
                                 }
                             });
                         }
