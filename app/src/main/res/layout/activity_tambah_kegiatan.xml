@@ -75,22 +75,38 @@
             android:layout_marginLeft="30dp"
             android:layout_marginTop="15dp"/>
 
-        <ImageView
-            android:id="@+id/tambahkegiatan_fotokegiatan"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_below="@id/tambahkegiatan_fotokegiatantxt"
-            android:background="@drawable/plus"
-            android:textColor="@color/black"
-            android:layout_marginLeft="29dp"
-            android:layout_marginRight="29dp"
-            android:layout_marginTop="20dp"/>
+        <HorizontalScrollView
+            android:id="@+id/scroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tambahkegiatan_fotokegiatantxt">
+            <LinearLayout
+                android:id="@+id/tambahkegiatan_parentLinearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="110dp"
+                    android:padding="10dp"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:id="@+id/tambahkegiatan_fotokegiatan"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:background="@drawable/plus"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+            </LinearLayout>
+        </HorizontalScrollView>
 
         <Button
             android:id="@+id/tambahkegiatan_btnsubmit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tambahkegiatan_fotokegiatan"
+            android:layout_below="@id/scroll"
             android:background="@drawable/submit"
             android:layout_marginLeft="25dp"
             android:layout_marginTop="20dp"
