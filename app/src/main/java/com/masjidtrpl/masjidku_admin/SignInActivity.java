@@ -1,18 +1,29 @@
 package com.masjidtrpl.masjidku_admin;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -49,23 +60,20 @@ public class SignInActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         reference = FirebaseDatabase.getInstance().getReference();
 
-//        listener = firebaseAuth -> {
-//            FirebaseUser user = firebaseAuth.getCurrentUser();
-//            if (user != null){
-//                startActivity(new Intent(SignInActivity.this, MainMasjidActivity.class));
-//                finish();
-//            }
-//        };
-
         register.setOnClickListener(v -> {
             startActivity(new Intent(SignInActivity.this, SignUpActivity.class));
             finish();
         });
 
-        google.setOnClickListener(v ->
-                startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder()
-                .setAvailableProviders(Collections.singletonList(new AuthUI.IdpConfig.GoogleBuilder().build()))
-                .setIsSmartLockEnabled(false).build(),RC_SIGN_IN));
+        google.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(AuthUI.getInstance()
+                        .createSignInIntentBuilder()
+                        .setAvailableProviders(Collections.singletonList(new AuthUI.IdpConfig.GoogleBuilder().build()))
+                        .setIsSmartLockEnabled(false).build(),RC_SIGN_IN);
+            }
+        });
 
         login.setOnClickListener(v -> {
             getEmail = user.getText().toString();
@@ -83,18 +91,17 @@ public class SignInActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // RC_SIGN_IN adalah kode permintaan yang Anda berikan ke startActivityForResult, saat memulai masuknya arus.
-        if (requestCode == RC_SIGN_IN){
-            if (resultCode == RESULT_OK){
+        if (requestCode == RC_SIGN_IN) {
+            if (resultCode == RESULT_OK) {
                 reference.child("Admin").child(auth.getCurrentUser().getUid()).child("Nama").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         ModelsName name = snapshot.getValue(ModelsName.class);
-                        assert name != null;
-                        if (name.getName().equals(auth.getCurrentUser().getDisplayName())){
+                        if (name.getName().equals(auth.getCurrentUser().getDisplayName())) {
                             Toast.makeText(SignInActivity.this, "Login Berhasil", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(SignInActivity.this, MainMasjidActivity.class));
                             finish();
-                        } else{
+                        } else {
                             startActivity(new Intent(SignInActivity.this, SignUpActivity.class));
                             finish();
                         }
@@ -102,13 +109,13 @@ public class SignInActivity extends AppCompatActivity {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-
+                        Toast.makeText(SignInActivity.this, "?????", Toast.LENGTH_SHORT).show();
                     }
                 });
-
 //                Toast.makeText(SignInActivity.this, "Login Berhasil", Toast.LENGTH_SHORT).show();
-//                startActivity(new Intent());
-            } else{
+//                startActivity(new Intent(SignInActivity.this, MainMasjidActivity.class));
+//                finish();
+            } else {
                 Toast.makeText(SignInActivity.this, "Login Dibatalkan", Toast.LENGTH_SHORT).show();
             }
         }
@@ -126,20 +133,6 @@ public class SignInActivity extends AppCompatActivity {
                     }
                 });
     }
-//
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        auth.addAuthStateListener(listener);
-//    }
-//
-//    @Override
-//    protected void onStop() {
-//        super.onStop();
-//        if (listener != null){
-//            auth.removeAuthStateListener(listener);
-//        }
-//    }
 
     private boolean isEmpty(String s){
         return TextUtils.isEmpty(s);

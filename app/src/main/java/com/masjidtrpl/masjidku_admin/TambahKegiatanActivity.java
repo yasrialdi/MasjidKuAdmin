@@ -49,6 +49,7 @@ public class TambahKegiatanActivity extends AppCompatActivity {
 
     Intent dataImage;
     String[] url = new String[3];
+    int x=1;
 
     private LinearLayout parentLinearLayout;
     private static final int REQ_CODE_CAMERA = 1;
@@ -62,6 +63,7 @@ public class TambahKegiatanActivity extends AppCompatActivity {
         deskripsi = findViewById(R.id.tambahkegiatan_editdeskripsi);
         foto = findViewById(R.id.tambahkegiatan_fotokegiatan);
         submit = findViewById(R.id.tambahkegiatan_btnsubmit);
+        parentLinearLayout = findViewById(R.id.tambahkegiatan_parentLinearLayout);
 
         auth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -86,9 +88,9 @@ public class TambahKegiatanActivity extends AppCompatActivity {
     private void detail(){
         String title = judul.getText().toString();
         String desc = deskripsi.getText().toString();
-        String url1 = url[0].toString();
-        String url2 = url[1].toString();
-        String url3 = url[2].toString();
+        String url1 = url[0];
+        String url2 = url[1];
+        String url3 = url[2];
 
         databaseReference.child("Admin").child(auth.getCurrentUser().getUid()).child("Kegiatan")
                 .setValue(new ModelsKegiatan(title, desc, url1, url2, url3))
@@ -103,14 +105,19 @@ public class TambahKegiatanActivity extends AppCompatActivity {
     }
 
     public void addImage() {
-        LayoutInflater inflater=(LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View rowView=inflater.inflate(R.layout.image, null);
-        // Add the new row before the add field button.
-        parentLinearLayout.addView(rowView, parentLinearLayout.getChildCount() - 1);
-        parentLinearLayout.isFocusable();
+        if (x<=3){
+            LayoutInflater inflater=(LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            final View rowView=inflater.inflate(R.layout.image, null);
+            // Add the new row before the add field button.
+            parentLinearLayout.addView(rowView, parentLinearLayout.getChildCount() - 1);
+            parentLinearLayout.isFocusable();
 
-        selectedImage = rowView.findViewById(R.id.number_edit_text);
-        getImage(TambahKegiatanActivity.this);
+            selectedImage = rowView.findViewById(R.id.number_edit_text);
+            getImage(TambahKegiatanActivity.this);
+            x++;
+        } else{
+            Toast.makeText(this, "Jumlah foto telah mencapai maks", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -121,8 +128,8 @@ public class TambahKegiatanActivity extends AppCompatActivity {
                 case REQ_CODE_CAMERA:
                     if (resultCode == RESULT_OK && data != null) {
                         Bitmap img = (Bitmap) data.getExtras().get("data");
-                        foto.setImageBitmap(img);
-                        Picasso.get().load(getImageUri(TambahKegiatanActivity.this,img)).into(foto);
+                        selectedImage.setImageBitmap(img);
+                        Picasso.get().load(getImageUri(TambahKegiatanActivity.this,img)).into(selectedImage);
                         dataImage = data;
 //                        uploadImage(data);
                     }
@@ -131,7 +138,7 @@ public class TambahKegiatanActivity extends AppCompatActivity {
                 case REQ_CODE_GALLERY:
                     if (resultCode == RESULT_OK && data != null) {
                         Uri img = data.getData();
-                        Picasso.get().load(img).into(foto);
+                        Picasso.get().load(img).into(selectedImage);
                         dataImage = data;
 //                        uploadImage(data);
                     }
@@ -213,17 +220,12 @@ public class TambahKegiatanActivity extends AppCompatActivity {
         AlertDialog.Builder dialogAlert = new AlertDialog.Builder(this).setTitle("Upload Image").setItems(menu, (dialog, which) -> {
             switch (which){
                 case 0:
-//                        Intent imageIntentCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                        startActivityForResult(imageIntentCamera, REQ_CODE_CAMERA);
-                    Dexter.withContext(getApplicationContext()).withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                    Dexter.withContext(getApplicationContext()).withPermission(Manifest.permission.CAMERA)
                             .withListener(new PermissionListener() {
                                 @Override
                                 public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
-                                    Intent imageIntentCamera = new Intent();
-                                    imageIntentCamera.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
-                                    imageIntentCamera.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-//                                        intent.setAction(Intent.ACTION_GET_CONTENT);
-                                    startActivityForResult(imageIntentCamera, REQ_CODE_CAMERA);
+                                    Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                                    startActivityForResult(takePicture, REQ_CODE_CAMERA);
                                 }
                                 @Override
                                 public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
@@ -236,18 +238,12 @@ public class TambahKegiatanActivity extends AppCompatActivity {
                             }).check();
                     break;
                 case 1:
-//                        Intent imageIntentGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//                        startActivityForResult(imageIntentGallery, REQ_CODE_GALLERY);
                     Dexter.withContext(getApplicationContext()).withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
                             .withListener(new PermissionListener() {
                                 @Override
                                 public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
-                                    Intent imageIntentGallery = new Intent();
-                                    imageIntentGallery.setType("image/*");
-                                    imageIntentGallery.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
-                                    imageIntentGallery.putExtra(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//                                        intent.setAction(Intent.ACTION_GET_CONTENT);
-                                    startActivityForResult(Intent.createChooser(imageIntentGallery,"Please Select Multiple Files"), REQ_CODE_GALLERY);
+                                    Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                    startActivityForResult(pickPhoto, REQ_CODE_GALLERY);
                                 }
                                 @Override
                                 public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {

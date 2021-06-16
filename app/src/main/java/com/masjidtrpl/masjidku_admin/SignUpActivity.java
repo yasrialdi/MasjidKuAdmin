@@ -74,11 +74,11 @@ public class SignUpActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
-                            reference.child("Admin").child(auth.getCurrentUser().getUid()).child("Nama").setValue(user.getText());
+//                            reference.child("Admin").child(auth.getCurrentUser().getUid()).child("Nama").setValue(user.getText());
                             reference.child("Admin").child(auth.getCurrentUser().getUid()).child("Nama").setValue(auth.getCurrentUser().getDisplayName());
 //                            saveUsername();
                             Toast.makeText(SignUpActivity.this, "Sign Up Berhasil", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(SignUpActivity.this, TambahKegiatanActivity.class));
+                            startActivity(new Intent(SignUpActivity.this, ProfilMasjidActivity.class));
                             finish();
                         } else{
                             Toast.makeText(SignUpActivity.this, "Terjadi kesalahan!", Toast.LENGTH_SHORT).show();
