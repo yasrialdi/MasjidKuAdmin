@@ -48,7 +48,10 @@ public class ProfilMasjidActivity extends AppCompatActivity {
     EditText name, address, contact, desc;
     CheckBox agree;
     Intent dataImageGalery, dataImageProfile;
+
     int cekImage;
+    String imgProfil;
+    String[] imgUrl = new String[5];
 
     StorageReference reference;
     DatabaseReference databaseReference;
@@ -70,6 +73,7 @@ public class ProfilMasjidActivity extends AppCompatActivity {
         galery = findViewById(R.id.profilmasjid_btnimagegaleri);
         submit = findViewById(R.id.profilmasjid_btnsubmit);
         agree = findViewById(R.id.profilmasjid_chkbox);
+        parentLinearLayout = findViewById(R.id.profilmasjid_parentLinearLayout);
 
         auth = FirebaseAuth.getInstance();
         reference = FirebaseStorage.getInstance().getReference();
@@ -111,9 +115,14 @@ public class ProfilMasjidActivity extends AppCompatActivity {
         String alamat = address.getText().toString();
         String kontak = contact.getText().toString();
         String deskripsi = desc.getText().toString();
+        String imgUrl1 = imgUrl[0];
+        String imgUrl2 = imgUrl[1];
+        String imgUrl3 = imgUrl[2];
+        String imgUrl4 = imgUrl[3];
+        String imgUrl5 = imgUrl[4];
 
         databaseReference.child("Admin").child(auth.getCurrentUser().getUid()).child("ProfilMasjid")
-                .setValue(new ModelsProfile(nama, alamat, kontak, deskripsi))
+                .setValue(new ModelsProfile(nama, alamat, kontak, deskripsi, imgProfil, imgUrl1, imgUrl2, imgUrl3, imgUrl4, imgUrl5))
                 .addOnSuccessListener(this, new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
@@ -140,17 +149,12 @@ public class ProfilMasjidActivity extends AppCompatActivity {
         AlertDialog.Builder dialogAlert = new AlertDialog.Builder(this).setTitle("Upload Image").setItems(menu, (dialog, which) -> {
             switch (which){
                 case 0:
-//                        Intent imageIntentCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                        startActivityForResult(imageIntentCamera, REQ_CODE_CAMERA);
-                    Dexter.withContext(getApplicationContext()).withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                    Dexter.withContext(getApplicationContext()).withPermission(Manifest.permission.CAMERA)
                             .withListener(new PermissionListener() {
                                 @Override
                                 public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
-                                    Intent imageIntentCamera = new Intent();
-                                    imageIntentCamera.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
-                                    imageIntentCamera.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-//                                        intent.setAction(Intent.ACTION_GET_CONTENT);
-                                    startActivityForResult(imageIntentCamera, REQ_CODE_CAMERA);
+                                    Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                                    startActivityForResult(takePicture, REQ_CODE_CAMERA);
                                 }
                                 @Override
                                 public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
@@ -163,20 +167,12 @@ public class ProfilMasjidActivity extends AppCompatActivity {
                             }).check();
                     break;
                 case 1:
-//                        Intent imageIntentGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//                        startActivityForResult(imageIntentGallery, REQ_CODE_GALLERY);
                     Dexter.withContext(getApplicationContext()).withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
                             .withListener(new PermissionListener() {
                                 @Override
                                 public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
-                                    Intent imageIntentGallery = new Intent();
-                                    imageIntentGallery.setType("image/*");
-                                    if (cekImage==1){
-                                        imageIntentGallery.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
-                                    }
-                                    imageIntentGallery.putExtra(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//                                        intent.setAction(Intent.ACTION_GET_CONTENT);
-                                    startActivityForResult(Intent.createChooser(imageIntentGallery,"Please Select Image"), REQ_CODE_GALLERY);
+                                    Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                    startActivityForResult(pickPhoto, REQ_CODE_GALLERY);
                                 }
                                 @Override
                                 public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
@@ -214,7 +210,6 @@ public class ProfilMasjidActivity extends AppCompatActivity {
                             Picasso.get().load(getImageUri(ProfilMasjidActivity.this,img)).into(profile);
                             dataImageProfile = data;
                         }
-//                        uploadImage(data);
                     }
 
                     break;
@@ -228,7 +223,6 @@ public class ProfilMasjidActivity extends AppCompatActivity {
                             Picasso.get().load(img).into(profile);
                             dataImageProfile = data;
                         }
-//                        uploadImage(data);
                     }
                     break;
             }
@@ -256,9 +250,9 @@ public class ProfilMasjidActivity extends AppCompatActivity {
                             public void onSuccess(Uri uri) {
                                 String url = uri.toString();
                                 if (cekImage==0){
-                                    databaseReference.child("Admin/"+getUserID+"/ProfilMasjid/ImagePPUrl").setValue(new ModelsImage(url));
+                                    imgProfil = url;
                                 } else if (cekImage==1){
-                                    databaseReference.child("Admin/"+getUserID+"/ProfilMasjid/ImageGaleiUrl").setValue(new ModelsImage(url));
+                                    imgUrl[finalI] = url;
                                 }
                                 Toast.makeText(ProfilMasjidActivity.this, "Upload File "+finalI+" Berhasil", Toast.LENGTH_SHORT).show();
                             }
