@@ -19,7 +19,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DetailKegiatanActivity"></activity>
+        <activity android:name=".DetailKegiatanActivity" />
         <activity android:name=".TambahKegiatanActivity" />
         <activity android:name=".ReviewMasjidActivity" />
         <activity android:name=".MainMasjidActivity" />
@@ -37,7 +37,6 @@
             android:value="@string/google_maps_key" />
 
         <activity android:name=".SignUpActivity" />
-        <activity android:name=".MainActivity" />
         <activity android:name=".SignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
