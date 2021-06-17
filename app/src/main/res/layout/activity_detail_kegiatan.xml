@@ -10,26 +10,37 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <LinearLayout
-        android:id="@+id/detailkegiatan_linear"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/detailkegiatan_fotokegiatan"
+        <HorizontalScrollView
+            android:id="@+id/detailkegiatan_HorScroll"
             android:layout_width="match_parent"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="20dp">
+                <ImageView
+                    android:id="@+id/detailkegiatan_Image1"
+                    android:layout_width="200dp"
+                    android:layout_height="150dp"
+                    android:layout_marginEnd="10dp"/>
+                <ImageView
+                    android:id="@+id/detailkegiatan_Image2"
+                    android:layout_width="200dp"
+                    android:layout_height="150dp"
+                    android:layout_marginEnd="10dp"/>
+                <ImageView
+                    android:id="@+id/detailkegiatan_Image3"
+                    android:layout_width="200dp"
+                    android:layout_height="150dp"/>
+            </LinearLayout>
+        </HorizontalScrollView>
 
         <TextView
             android:id="@+id/judul"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/detailkegiatan_linear"
+            android:layout_below="@id/detailkegiatan_HorScroll"
             android:text="Judul"
             android:textSize="20sp"
             android:textColor="#000"

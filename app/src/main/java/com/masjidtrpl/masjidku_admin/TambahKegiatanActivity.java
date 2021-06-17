@@ -92,7 +92,7 @@ public class TambahKegiatanActivity extends AppCompatActivity {
         String url2 = url[1];
         String url3 = url[2];
 
-        databaseReference.child("Admin").child(auth.getCurrentUser().getUid()).child("Kegiatan")
+        databaseReference.child("Admin").child(auth.getCurrentUser().getUid()).child("Kegiatan"+judul).push()
                 .setValue(new ModelsKegiatan(title, desc, url1, url2, url3))
                 .addOnSuccessListener(this, new OnSuccessListener<Void>() {
             @Override
@@ -263,5 +263,11 @@ public class TambahKegiatanActivity extends AppCompatActivity {
         });
         dialogAlert.create();
         dialogAlert.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(TambahKegiatanActivity.this, MainMasjidActivity.class));
+        finish();
     }
 }

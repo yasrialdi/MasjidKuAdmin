@@ -98,8 +98,8 @@ public class SignInActivity extends AppCompatActivity {
                 reference.child("Admin").child(auth.getCurrentUser().getUid()).child("Nama").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        ModelsName name = snapshot.getValue(ModelsName.class);
-                        if (name != null) {
+                        if (snapshot.getChildren() != null) {
+                            ModelsName name = snapshot.getValue(ModelsName.class);
                             if (name.getName().equals(auth.getCurrentUser().getDisplayName())) {
                                 Toast.makeText(SignInActivity.this, "Login Berhasil", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(SignInActivity.this, MainMasjidActivity.class));
