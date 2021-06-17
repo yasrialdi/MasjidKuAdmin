@@ -50,6 +50,7 @@ public class ProfilMasjidActivity extends AppCompatActivity {
     Intent dataImageGalery, dataImageProfile;
 
     int cekImage;
+    int countImage=0;
     String imgProfil;
     String[] imgUrl = new String[5];
 
@@ -134,14 +135,19 @@ public class ProfilMasjidActivity extends AppCompatActivity {
     }
 
     public void addImage() {
-        LayoutInflater inflater=(LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View rowView=inflater.inflate(R.layout.image, null);
-        // Add the new row before the add field button.
-        parentLinearLayout.addView(rowView, parentLinearLayout.getChildCount() - 1);
-        parentLinearLayout.isFocusable();
+        if (countImage<6){
+            LayoutInflater inflater=(LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            final View rowView=inflater.inflate(R.layout.image, null);
+            // Add the new row before the add field button.
+            parentLinearLayout.addView(rowView, parentLinearLayout.getChildCount() - 1);
+            parentLinearLayout.isFocusable();
 
-        selectedImage = rowView.findViewById(R.id.number_edit_text);
-        getImage(ProfilMasjidActivity.this);
+            selectedImage = rowView.findViewById(R.id.number_edit_text);
+            getImage(ProfilMasjidActivity.this);
+            countImage++;
+        } else{
+            Toast.makeText(this, "Image telah mencapai batas", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void getImage(Context context){
@@ -231,21 +237,27 @@ public class ProfilMasjidActivity extends AppCompatActivity {
 
     public void uploadImage(Intent data){
         if(data.getClipData() != null){
+            String pathFile="";
             int totalItemsSelected = data.getClipData().getItemCount();
             String getUserID = auth.getCurrentUser().getUid();
 
             for(int i = 0; i < totalItemsSelected; i++){
                 Uri fileUri = data.getClipData().getItemAt(i).getUri();
                 String fileName = getFileName(fileUri);
-                String pathFile = "Admin/"+getUserID+"/ProfilMasjid/Image/"+fileName;
+                if(cekImage==0){
+                    pathFile = "Admin/"+getUserID+"/Profil/Image/Profil_"+i+"_"+fileName;
+                } else if(cekImage==1){
+                    pathFile = "Admin/"+getUserID+"/Profil/Image/"+i+"_"+fileName;
+                }
 
                 StorageReference fileToUpload = reference.child(pathFile);
-
+                UploadTask uploadTask = fileToUpload.putFile(fileUri);
                 final int finalI = i;
-                fileToUpload.putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                String finalPathFile = pathFile;
+                uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        reference.child(pathFile).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        reference.child(finalPathFile).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
                                 String url = uri.toString();

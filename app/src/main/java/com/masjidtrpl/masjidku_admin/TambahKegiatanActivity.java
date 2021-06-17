@@ -155,12 +155,13 @@ public class TambahKegiatanActivity extends AppCompatActivity {
                 for(int i = 0; i < totalItemsSelected; i++){
                     Uri fileUri = data.getClipData().getItemAt(i).getUri();
                     String fileName = getFileName(fileUri);
-                    String pathFile = "Admin/"+getUserID+"/Kegiatan/Image"+fileName;
+                    String pathFile = "Admin/"+getUserID+"/Kegiatan/Image/"+getUserID+"_"+i+"_"+fileName;
 
                     StorageReference fileToUpload = reference.child(pathFile);
+                    UploadTask uploadTask = fileToUpload.putFile(fileUri);
 
                     final int finalI = i;
-                    fileToUpload.putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             reference.child(pathFile).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -168,7 +169,7 @@ public class TambahKegiatanActivity extends AppCompatActivity {
                                 public void onSuccess(Uri uri) {
                                     url[finalI] = uri.toString();
 //                                    databaseReference.child("Admin/"+getUserID+"/Kegiatan/ImageUrl").setValue(new ModelsImage(url));
-//                                    Toast.makeText(TambahKegiatanActivity.this, "Upload File "+finalI+" Berhasil", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(TambahKegiatanActivity.this, "Upload File "+finalI+" Berhasil", Toast.LENGTH_LONG).show();
                                 }
                             });
                         }

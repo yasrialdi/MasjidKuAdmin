@@ -47,6 +47,8 @@ public class MainMasjidActivity extends AppCompatActivity implements AdapterKegi
         kegiatan.setLayoutManager(new LinearLayoutManager(this));
         kegiatan.setHasFixedSize(true);
 
+        getData();
+
         tambah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

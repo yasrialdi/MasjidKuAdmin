@@ -49,7 +49,7 @@ public class AdapterKegiatan extends RecyclerView.Adapter<AdapterKegiatan.CardVi
     @Override
     public void onBindViewHolder(@NonNull AdapterKegiatan.CardViewHolder holder, int position) {
         final String judul = kegiatan.get(position).getTitle();
-        final String img1 = kegiatan.get(position).getTitle();
+        final String img1 = kegiatan.get(position).getImgUrl1();
 
         Glide.with(context).load(img1).into(holder.img);
         holder.title.setText(judul);
