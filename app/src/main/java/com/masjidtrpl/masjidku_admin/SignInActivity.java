@@ -72,6 +72,7 @@ public class SignInActivity extends AppCompatActivity {
                         .createSignInIntentBuilder()
                         .setAvailableProviders(Collections.singletonList(new AuthUI.IdpConfig.GoogleBuilder().build()))
                         .setIsSmartLockEnabled(false).build(),RC_SIGN_IN);
+                Toast.makeText(SignInActivity.this, "Loading!!!!", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -83,6 +84,7 @@ public class SignInActivity extends AppCompatActivity {
                 Toast.makeText(SignInActivity.this, "Email atau sandi tidak boleh kosong", Toast.LENGTH_SHORT).show();
             } else{
                 loginUser();
+                Toast.makeText(this, "Loading!!!", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -97,11 +99,13 @@ public class SignInActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         ModelsName name = snapshot.getValue(ModelsName.class);
-                        if (name.getName().equals(auth.getCurrentUser().getDisplayName())) {
-                            Toast.makeText(SignInActivity.this, "Login Berhasil", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(SignInActivity.this, MainMasjidActivity.class));
-                            finish();
-                        } else {
+                        if (name != null) {
+                            if (name.getName().equals(auth.getCurrentUser().getDisplayName())) {
+                                Toast.makeText(SignInActivity.this, "Login Berhasil", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(SignInActivity.this, MainMasjidActivity.class));
+                                finish();
+                            }
+                        } else{
                             startActivity(new Intent(SignInActivity.this, SignUpActivity.class));
                             finish();
                         }
