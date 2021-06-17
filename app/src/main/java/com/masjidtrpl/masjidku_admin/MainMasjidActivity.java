@@ -47,6 +47,8 @@ public class MainMasjidActivity extends AppCompatActivity implements AdapterKegi
         kegiatan.setLayoutManager(new LinearLayoutManager(this));
         kegiatan.setHasFixedSize(true);
 
+        laporan.setEnabled(false);
+        izin.setEnabled(false);
         getData();
 
         tambah.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +69,7 @@ public class MainMasjidActivity extends AppCompatActivity implements AdapterKegi
     }
 
     private void getData(){
-        Toast.makeText(this, "MOhon tunggu sebentar...", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Mohon tunggu sebentar...", Toast.LENGTH_SHORT).show();
         reference.child("Admin").child(auth.getCurrentUser().getUid()).child("Kegiatan")
                 .addValueEventListener(new ValueEventListener() {
                     @Override
@@ -102,5 +104,11 @@ public class MainMasjidActivity extends AppCompatActivity implements AdapterKegi
                         }
                     });
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        onDestroy();
     }
 }
