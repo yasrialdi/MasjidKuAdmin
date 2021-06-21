@@ -70,7 +70,7 @@ public class MainMasjidActivity extends AppCompatActivity implements AdapterKegi
 
     private void getData(){
         Toast.makeText(this, "Mohon tunggu sebentar...", Toast.LENGTH_SHORT).show();
-        reference.child("Admin").child(auth.getCurrentUser().getUid()).child("Kegiatan")
+        reference.child("Data").child("Admin").child(auth.getUid()).child("Kegiatan")
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {

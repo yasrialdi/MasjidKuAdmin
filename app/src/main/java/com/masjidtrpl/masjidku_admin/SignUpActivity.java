@@ -74,7 +74,7 @@ public class SignUpActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
-                            reference.child("Admin").child(auth.getCurrentUser().getUid()).child("Nama").push().setValue(new ModelsName(auth.getCurrentUser().getDisplayName()));
+                            reference.child("Admin").child(auth.getUid()).child("Nama").setValue(new ModelsName(user.getText().toString()));
 //                            reference.child("Admin").child(auth.getCurrentUser().getUid()).child("Nama").setValue(auth.getCurrentUser().getDisplayName());
 //                            saveUsername();
                             Toast.makeText(SignUpActivity.this, "Sign Up Berhasil", Toast.LENGTH_SHORT).show();

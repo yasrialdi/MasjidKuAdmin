@@ -52,11 +52,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "110743054629-ctvkutobn3896l1fnof19ina0o16m8jk.apps.googleusercontent.com",
+          "client_id": "110743054629-m7e48k6pbhvlp5eqmvn9u0rlknrfn23s.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.masjidtrpl.masjidku_admin",
-            "certificate_hash": "8221ebc48364e24a56f3c647cc31e7bdc12a0888"
+            "certificate_hash": "b33395011fe972168dd4989e377aed51e7e4ef65"
           }
         },
         {

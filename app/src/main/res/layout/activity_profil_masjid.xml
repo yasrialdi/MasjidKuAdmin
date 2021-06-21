@@ -139,7 +139,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_below="@id/profilmasjid_btnimageprofil"
-            android:text="Foto Profil Masjid"
+            android:text="Foto Galei Masjid"
             android:textSize="18sp"
             android:textColor="@color/black"
             android:layout_marginLeft="30dp"
