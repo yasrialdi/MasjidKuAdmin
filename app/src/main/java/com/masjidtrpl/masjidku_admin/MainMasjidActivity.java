@@ -70,7 +70,7 @@ public class MainMasjidActivity extends AppCompatActivity implements AdapterKegi
 
     private void getData(){
         Toast.makeText(this, "Mohon tunggu sebentar...", Toast.LENGTH_SHORT).show();
-        reference.child("Data").child("Admin").child(auth.getUid()).child("Kegiatan")
+        reference.child("Admin").child(auth.getUid()).child("Kegiatan")
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -96,7 +96,7 @@ public class MainMasjidActivity extends AppCompatActivity implements AdapterKegi
     @Override
     public void onDeleteData(ModelsKegiatan modelsKegiatan, int position) {
         if (reference!=null){
-            reference.child("Admin").child(auth.getCurrentUser().getUid()).child("Kegiatan").child(modelsKegiatan.getKey()).removeValue()
+            reference.child("Admin").child(auth.getUid()).child("Kegiatan").child(modelsKegiatan.getKey()).removeValue()
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {

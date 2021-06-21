@@ -141,4 +141,9 @@ public class SignInActivity extends AppCompatActivity {
     private boolean isEmpty(String s){
         return TextUtils.isEmpty(s);
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }

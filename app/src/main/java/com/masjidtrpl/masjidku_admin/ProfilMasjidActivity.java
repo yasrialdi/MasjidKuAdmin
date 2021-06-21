@@ -47,7 +47,6 @@ public class ProfilMasjidActivity extends AppCompatActivity {
     ImageView galery, selectedImage, profile;
     EditText name, address, contact, desc;
     CheckBox agree;
-    Intent dataImageGalery, dataImageProfile;
 
     int cekImage;
     int countImage=1;

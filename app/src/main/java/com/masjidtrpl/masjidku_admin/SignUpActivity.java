@@ -100,4 +100,9 @@ public class SignUpActivity extends AppCompatActivity {
     private boolean isEmpty(String s){
         return TextUtils.isEmpty(s);
     }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(SignUpActivity.this, SignInActivity.class));
+    }
 }
