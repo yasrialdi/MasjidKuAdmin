@@ -50,9 +50,9 @@ public class TambahKegiatanActivity extends AppCompatActivity {
     Intent dataImage;
     String[] url = new String[3];
     int x=1;
+    int y=0;
 
     private LinearLayout parentLinearLayout;
-    private static final int REQ_CODE_CAMERA = 1;
     private static final int REQ_CODE_GALLERY = 2;
 
     @Override
@@ -79,7 +79,6 @@ public class TambahKegiatanActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                uploadImage(dataImage);
                 detail();
             }
         });
@@ -92,7 +91,7 @@ public class TambahKegiatanActivity extends AppCompatActivity {
         String url2 = url[1];
         String url3 = url[2];
 
-        databaseReference.child("Admin").child(auth.getCurrentUser().getUid()).child("Kegiatan"+judul).push()
+        databaseReference.child("Admin").child(auth.getUid()).child("Kegiatan")
                 .setValue(new ModelsKegiatan(title, desc, url1, url2, url3))
                 .addOnSuccessListener(this, new OnSuccessListener<Void>() {
             @Override
@@ -125,22 +124,11 @@ public class TambahKegiatanActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != RESULT_CANCELED) {
             switch (requestCode) {
-                case REQ_CODE_CAMERA:
-                    if (resultCode == RESULT_OK && data != null) {
-                        Bitmap img = (Bitmap) data.getExtras().get("data");
-                        selectedImage.setImageBitmap(img);
-                        Picasso.get().load(getImageUri(TambahKegiatanActivity.this,img)).into(selectedImage);
-                        dataImage = data;
-//                        uploadImage(data);
-                    }
-
-                    break;
                 case REQ_CODE_GALLERY:
                     if (resultCode == RESULT_OK && data != null) {
                         Uri img = data.getData();
                         Picasso.get().load(img).into(selectedImage);
-                        dataImage = data;
-//                        uploadImage(data);
+                        uploadImage(data);
                     }
                     break;
             }
@@ -155,7 +143,7 @@ public class TambahKegiatanActivity extends AppCompatActivity {
                 for(int i = 0; i < totalItemsSelected; i++){
                     Uri fileUri = data.getClipData().getItemAt(i).getUri();
                     String fileName = getFileName(fileUri);
-                    String pathFile = "Admin/"+getUserID+"/Kegiatan/Image/"+getUserID+"_"+i+"_"+fileName;
+                    String pathFile = "Admin/"+getUserID+"/Kegiatan/Image/"+i+"_"+fileName;
 
                     StorageReference fileToUpload = reference.child(pathFile);
                     UploadTask uploadTask = fileToUpload.putFile(fileUri);
@@ -167,7 +155,8 @@ public class TambahKegiatanActivity extends AppCompatActivity {
                             reference.child(pathFile).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-                                    url[finalI] = uri.toString();
+                                    url[y] = uri.toString();
+                                    y++;
 //                                    databaseReference.child("Admin/"+getUserID+"/Kegiatan/ImageUrl").setValue(new ModelsImage(url));
                                     Toast.makeText(TambahKegiatanActivity.this, "Upload File "+finalI+" Berhasil", Toast.LENGTH_LONG).show();
                                 }
@@ -217,28 +206,12 @@ public class TambahKegiatanActivity extends AppCompatActivity {
     }
 
     private void getImage(Context context){
-        CharSequence[] menu = {"Kamera", "Galeri", "Kembali"};
-        AlertDialog.Builder dialogAlert = new AlertDialog.Builder(this).setTitle("Upload Image").setItems(menu, (dialog, which) -> {
+        CharSequence[] menu = {"Oke", "Kembali"};
+        AlertDialog.Builder dialogAlert = new AlertDialog.Builder(this).setTitle("Upload Image").
+                setMessage("Pilihlah foto yang benar, karena foto akan langsung di upload ke databasae kami").
+                setItems(menu, (dialog, which) -> {
             switch (which){
                 case 0:
-                    Dexter.withContext(getApplicationContext()).withPermission(Manifest.permission.CAMERA)
-                            .withListener(new PermissionListener() {
-                                @Override
-                                public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
-                                    Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                                    startActivityForResult(takePicture, REQ_CODE_CAMERA);
-                                }
-                                @Override
-                                public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
-                                    Toast.makeText(TambahKegiatanActivity.this, "Give app permission to camera", Toast.LENGTH_SHORT).show();
-                                }
-                                @Override
-                                public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
-                                    permissionToken.continuePermissionRequest();
-                                }
-                            }).check();
-                    break;
-                case 1:
                     Dexter.withContext(getApplicationContext()).withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
                             .withListener(new PermissionListener() {
                                 @Override
@@ -256,7 +229,7 @@ public class TambahKegiatanActivity extends AppCompatActivity {
                                 }
                             }).check();
                     break;
-                case 3:
+                case 1:
                     dialog.dismiss();
                     break;
             }

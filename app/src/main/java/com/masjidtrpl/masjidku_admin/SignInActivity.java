@@ -95,12 +95,12 @@ public class SignInActivity extends AppCompatActivity {
         // RC_SIGN_IN adalah kode permintaan yang Anda berikan ke startActivityForResult, saat memulai masuknya arus.
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == RESULT_OK) {
-                reference.child("Admin").child(auth.getCurrentUser().getUid()).child("Nama").addValueEventListener(new ValueEventListener() {
+                reference.child("Admin").child(auth.getUid()).child("Nama").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.getChildren() != null) {
                             ModelsName name = snapshot.getValue(ModelsName.class);
-                            if (name.getName().equals(auth.getCurrentUser().getDisplayName())) {
+                            if (name.getName()!=null) {
                                 Toast.makeText(SignInActivity.this, "Login Berhasil", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(SignInActivity.this, MainMasjidActivity.class));
                                 finish();

@@ -50,7 +50,8 @@ public class ProfilMasjidActivity extends AppCompatActivity {
     Intent dataImageGalery, dataImageProfile;
 
     int cekImage;
-    int countImage=0;
+    int countImage=1;
+    int x=0;
     String imgProfil;
     String[] imgUrl = new String[5];
 
@@ -100,8 +101,6 @@ public class ProfilMasjidActivity extends AppCompatActivity {
             submit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    uploadImage(dataImageProfile);
-                    uploadImage(dataImageGalery);
                     detail();
                 }
             });
@@ -122,7 +121,7 @@ public class ProfilMasjidActivity extends AppCompatActivity {
         String imgUrl4 = imgUrl[3];
         String imgUrl5 = imgUrl[4];
 
-        databaseReference.child("Admin").child(auth.getCurrentUser().getUid()).child("ProfilMasjid")
+        databaseReference.child("Admin").child(auth.getUid()).child("ProfilMasjid")
                 .setValue(new ModelsProfile(nama, alamat, kontak, deskripsi, imgProfil, imgUrl1, imgUrl2, imgUrl3, imgUrl4, imgUrl5))
                 .addOnSuccessListener(this, new OnSuccessListener<Void>() {
             @Override
@@ -210,11 +209,11 @@ public class ProfilMasjidActivity extends AppCompatActivity {
                         if (cekImage==1){
                             selectedImage.setImageBitmap(img);
                             Picasso.get().load(getImageUri(ProfilMasjidActivity.this,img)).into(selectedImage);
-                            dataImageGalery = data;
+                            uploadImage(data);
                         } else if (cekImage==0){
                             profile.setImageBitmap(img);
                             Picasso.get().load(getImageUri(ProfilMasjidActivity.this,img)).into(profile);
-                            dataImageProfile = data;
+                            uploadImage(data);
                         }
                     }
 
@@ -224,10 +223,10 @@ public class ProfilMasjidActivity extends AppCompatActivity {
                         Uri img = data.getData();
                         if (cekImage==1){
                             Picasso.get().load(img).into(selectedImage);
-                            dataImageGalery = data;
+                            uploadImage(data);
                         } else if (cekImage==0){
                             Picasso.get().load(img).into(profile);
-                            dataImageProfile = data;
+                            uploadImage(data);
                         }
                     }
                     break;
@@ -245,7 +244,7 @@ public class ProfilMasjidActivity extends AppCompatActivity {
                 Uri fileUri = data.getClipData().getItemAt(i).getUri();
                 String fileName = getFileName(fileUri);
                 if(cekImage==0){
-                    pathFile = "Admin/"+getUserID+"/Profil/Image/Profil_"+i+"_"+fileName;
+                    pathFile = "Admin/"+getUserID+"/Profil/Image/Profil"+fileName;
                 } else if(cekImage==1){
                     pathFile = "Admin/"+getUserID+"/Profil/Image/"+i+"_"+fileName;
                 }
@@ -264,7 +263,8 @@ public class ProfilMasjidActivity extends AppCompatActivity {
                                 if (cekImage==0){
                                     imgProfil = url;
                                 } else if (cekImage==1){
-                                    imgUrl[finalI] = url;
+                                    imgUrl[x] = url;
+                                    x++;
                                 }
                                 Toast.makeText(ProfilMasjidActivity.this, "Upload File "+finalI+" Berhasil", Toast.LENGTH_SHORT).show();
                             }
