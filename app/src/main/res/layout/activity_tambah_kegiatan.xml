@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TambahKegiatanActivity">
+    tools:context=".TambahKegiatanActivity"
+    android:background="@color/white">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -22,6 +23,13 @@
             android:layout_marginBottom="20dp"
             android:textColor="@color/black"/>
 
+        <ImageView
+            android:layout_width="390dp"
+            android:layout_height="420dp"
+            android:background="@drawable/kotakk"
+            android:layout_below="@id/tambahkegiatan_txt"
+            android:layout_centerHorizontal="true"/>
+
         <TextView
             android:id="@+id/tambahkegiatan_judulkegiatan"
             android:layout_width="wrap_content"
@@ -36,12 +44,14 @@
         <EditText
             android:id="@+id/tambahkegiatan_editnajudulkegiatan"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_below="@id/tambahkegiatan_judulkegiatan"
             android:textSize="15sp"
+            android:paddingLeft="10dp"
             android:textColor="@color/black"
             android:layout_marginLeft="29dp"
-            android:layout_marginRight="29dp"/>
+            android:layout_marginRight="29dp"
+            android:background="@drawable/username"/>
 
         <TextView
             android:id="@+id/tambahkegiatan_deskripsi"
@@ -57,12 +67,14 @@
         <EditText
             android:id="@+id/tambahkegiatan_editdeskripsi"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_below="@id/tambahkegiatan_deskripsi"
             android:textSize="15sp"
             android:textColor="@color/black"
             android:layout_marginLeft="29dp"
-            android:layout_marginRight="29dp"/>
+            android:layout_marginRight="29dp"
+            android:paddingLeft="10dp"
+            android:background="@drawable/username"/>
 
         <TextView
             android:id="@+id/tambahkegiatan_fotokegiatantxt"
@@ -105,7 +117,7 @@
         <Button
             android:id="@+id/tambahkegiatan_btnsubmit"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:layout_below="@id/scroll"
             android:background="@drawable/submit"
             android:layout_marginLeft="25dp"
