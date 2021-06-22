@@ -5,16 +5,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfilMasjidActivity">
+    tools:context=".ProfilMasjidActivity"
+    android:background="@color/white">
     
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+
+
     <TextView
         android:id="@+id/profilmasjid_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="50dp"
         android:background="@drawable/profill"
         android:shadowColor="@color/black" />
 
@@ -26,7 +29,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginTop="10dp"
             android:text="Lengkapi Profil Masjid!"
-            android:textSize="20sp"
+            android:textSize="25sp"
             android:textColor="@color/black"/>
 
         <TextView
@@ -43,12 +46,14 @@
         <EditText
             android:id="@+id/profilmasjid_editnamamasjid"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_below="@id/profilmasjid_namamasjid"
             android:textSize="15sp"
+            android:background="@drawable/username"
             android:textColor="@color/black"
             android:layout_marginLeft="29dp"
-            android:layout_marginRight="29dp"/>
+            android:layout_marginRight="29dp"
+            android:paddingLeft="10dp"/>
 
         <TextView
             android:id="@+id/profilmasjid_alamat"
@@ -64,12 +69,14 @@
         <EditText
             android:id="@+id/profilmasjid_editalamatmasjid"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_below="@id/profilmasjid_alamat"
             android:textSize="15sp"
             android:textColor="@color/black"
             android:layout_marginLeft="29dp"
-            android:layout_marginRight="29dp"/>
+            android:layout_marginRight="29dp"
+            android:background="@drawable/username"
+            android:paddingLeft="10dp"/>
 
         <TextView
             android:id="@+id/profilmasjid_nohp"
@@ -85,12 +92,14 @@
         <EditText
             android:id="@+id/profilmasjid_editnohp"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_below="@id/profilmasjid_nohp"
             android:textSize="15sp"
             android:textColor="@color/black"
             android:layout_marginLeft="29dp"
-            android:layout_marginRight="29dp"/>
+            android:layout_marginRight="29dp"
+            android:background="@drawable/username"
+            android:paddingLeft="10dp"/>
 
         <TextView
             android:id="@+id/profilmasjid_deskripsi"
@@ -106,12 +115,14 @@
         <EditText
             android:id="@+id/profilmasjid_editdeskripsi"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_below="@id/profilmasjid_deskripsi"
             android:textSize="15sp"
             android:textColor="@color/black"
             android:layout_marginLeft="29dp"
-            android:layout_marginRight="29dp"/>
+            android:layout_marginRight="29dp"
+            android:background="@drawable/username"
+            android:paddingLeft="10dp"/>
 
         <TextView
             android:id="@+id/profilmasjid_fotoprofil"
@@ -194,7 +205,7 @@
         <Button
             android:id="@+id/profilmasjid_btnsubmit"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:layout_below="@id/profilmasjid_chkbox"
             android:background="@drawable/submit"
             android:layout_marginStart="25dp"
