@@ -24,8 +24,8 @@
             <ImageView
                 android:id="@+id/itemKegiatan_Image"
                 android:layout_gravity="center"
-                android:layout_width="200dp"
-                android:layout_height="150dp"/>
+                android:layout_width="405dp"
+                android:layout_height="180dp"/>
 
             <TextView
                 android:id="@+id/itemKegiatan_Title"
@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Judul"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:textStyle="bold|italic"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
