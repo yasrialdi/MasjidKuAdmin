@@ -44,7 +44,9 @@ public class MainMasjidActivity extends AppCompatActivity implements AdapterKegi
         reference = FirebaseDatabase.getInstance().getReference();
         auth = FirebaseAuth.getInstance();
 
-        kegiatan.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager horizontalLayoutManager
+                = new LinearLayoutManager(MainMasjidActivity.this, LinearLayoutManager.HORIZONTAL, false);
+        kegiatan.setLayoutManager(horizontalLayoutManager);
         kegiatan.setHasFixedSize(true);
 
         laporan.setEnabled(false);
