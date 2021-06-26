@@ -75,6 +75,7 @@ public class MainMasjidActivity extends AppCompatActivity implements AdapterKegi
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         listKegiatan = new ArrayList<>();
+
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                             ModelsKegiatan modelsKegiatan = dataSnapshot.getValue(ModelsKegiatan.class);
                             assert modelsKegiatan != null;

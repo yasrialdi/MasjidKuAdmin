@@ -8,6 +8,9 @@ public class ModelsKegiatan {
     private String title;
     private String desc;
 
+    public ModelsKegiatan() {
+    }
+
     public ModelsKegiatan(String title, String desc, String imgUrl1, String imgUrl2, String imgUrl3) {
         this.imgUrl1 = imgUrl1;
         this.imgUrl2 = imgUrl2;

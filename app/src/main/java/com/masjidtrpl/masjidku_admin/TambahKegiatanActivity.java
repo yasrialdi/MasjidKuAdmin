@@ -38,6 +38,7 @@ import com.karumi.dexter.listener.single.PermissionListener;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
+import java.util.UUID;
 
 public class TambahKegiatanActivity extends AppCompatActivity {
     EditText judul, deskripsi;
@@ -47,7 +48,6 @@ public class TambahKegiatanActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
     StorageReference reference;
 
-    Intent dataImage;
     String[] url = new String[3];
     int x=1;
     int y=0;
@@ -91,7 +91,7 @@ public class TambahKegiatanActivity extends AppCompatActivity {
         String url2 = url[1];
         String url3 = url[2];
 
-        databaseReference.child("Admin").child(auth.getUid()).child("Kegiatan")
+        databaseReference.child("Admin").child(auth.getUid()).child("Kegiatan").push()
                 .setValue(new ModelsKegiatan(title, desc, url1, url2, url3))
                 .addOnSuccessListener(this, new OnSuccessListener<Void>() {
             @Override
@@ -123,70 +123,48 @@ public class TambahKegiatanActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != RESULT_CANCELED) {
-            switch (requestCode) {
-                case REQ_CODE_GALLERY:
-                    if (resultCode == RESULT_OK && data != null) {
-                        Uri img = data.getData();
-                        Picasso.get().load(img).into(selectedImage);
-                        uploadImage(data);
-                    }
-                    break;
+            if (requestCode == REQ_CODE_GALLERY) {
+                if (resultCode == RESULT_OK && data != null) {
+                    Uri img = data.getData();
+                    Picasso.get().load(img).into(selectedImage);
+                    uploadImage(data);
+                }
             }
         }
     }
 
     public void uploadImage(Intent data){
-        if(data.getClipData() != null){
-            int totalItemsSelected = data.getClipData().getItemCount();
-            String getUserID = auth.getCurrentUser().getUid();
-            if (totalItemsSelected < 4){
-                for(int i = 0; i < totalItemsSelected; i++){
-                    Uri fileUri = data.getClipData().getItemAt(i).getUri();
-                    String fileName = getFileName(fileUri);
-                    String pathFile = "Admin/"+getUserID+"/Kegiatan/Image/"+i+"_"+fileName;
+        if(data.getData() != null){
+            Uri fileUri = data.getData();
+            String fileName=getfilenamefromuri(fileUri);
 
-                    StorageReference fileToUpload = reference.child(pathFile);
-                    UploadTask uploadTask = fileToUpload.putFile(fileUri);
+            StorageReference fileToUpload = reference.child("Admin").child(auth.getUid()).child("Kegiatan").child(fileName);
 
-                    final int finalI = i;
-                    uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            fileToUpload.putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    reference.child("Admin").child(auth.getUid()).child("Kegiatan").child(fileName).getDownloadUrl()
+                            .addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            reference.child(pathFile).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    url[y] = uri.toString();
-                                    y++;
-//                                    databaseReference.child("Admin/"+getUserID+"/Kegiatan/ImageUrl").setValue(new ModelsImage(url));
-                                    Toast.makeText(TambahKegiatanActivity.this, "Upload File "+finalI+" Berhasil", Toast.LENGTH_LONG).show();
-                                }
-                            });
+                        public void onSuccess(Uri uri) {
+                            url[y] = uri.toString();
+                            y++;
+//                          databaseReference.child("Admin/"+getUserID+"/Kegiatan/ImageUrl").setValue(new ModelsImage(url));
+                            Toast.makeText(TambahKegiatanActivity.this, "Upload File Berhasil", Toast.LENGTH_LONG).show();
                         }
                     });
                 }
-            } else{
-                Toast.makeText(this, "Image tidak boleh dari 3", Toast.LENGTH_SHORT).show();
-            }
-
-            //Toast.makeText(MainActivity.this, "Selected Multiple Files", Toast.LENGTH_SHORT).show();
-        } else if (data.getData() != null){
-            Toast.makeText(TambahKegiatanActivity.this, "Selected Single File", Toast.LENGTH_SHORT).show();
+            });
+        } else{
+            Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
         }
     }
 
-    //===== bitmap to Uri
-    public Uri getImageUri(Context inContext, Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "intuenty", null);
-        Log.d("image uri",path);
-        return Uri.parse(path);
-    }
-
-    public String getFileName(Uri uri) {
+    public String getfilenamefromuri(Uri filepath)
+    {
         String result = null;
-        if (uri.getScheme().equals("content")) {
-            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+        if (filepath.getScheme().equals("content")) {
+            Cursor cursor = getContentResolver().query(filepath, null, null, null, null);
             try {
                 if (cursor != null && cursor.moveToFirst()) {
                     result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
@@ -196,7 +174,7 @@ public class TambahKegiatanActivity extends AppCompatActivity {
             }
         }
         if (result == null) {
-            result = uri.getPath();
+            result = filepath.getPath();
             int cut = result.lastIndexOf('/');
             if (cut != -1) {
                 result = result.substring(cut + 1);
@@ -206,9 +184,8 @@ public class TambahKegiatanActivity extends AppCompatActivity {
     }
 
     private void getImage(Context context){
-        CharSequence[] menu = {"Oke", "Kembali"};
+        CharSequence[] menu = {"Galery", "Kembali"};
         AlertDialog.Builder dialogAlert = new AlertDialog.Builder(this).setTitle("Upload Image").
-                setMessage("Pilihlah foto yang benar, karena foto akan langsung di upload ke databasae kami").
                 setItems(menu, (dialog, which) -> {
             switch (which){
                 case 0:
