@@ -136,18 +136,19 @@ public class TambahKegiatanActivity extends AppCompatActivity {
     public void uploadImage(Intent data){
         if(data.getData() != null){
             Uri fileUri = data.getData();
-            String fileName=getfilenamefromuri(fileUri);
+            String fileName = getfilenamefromuri(fileUri);
+            String pathFile = "Admin/"+auth.getUid()+"/Kegiatan/"+fileName;
 
-            StorageReference fileToUpload = reference.child("Admin").child(auth.getUid()).child("Kegiatan").child(fileName);
+            StorageReference fileToUpload = reference.child(pathFile);
 
             fileToUpload.putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    reference.child("Admin").child(auth.getUid()).child("Kegiatan").child(fileName).getDownloadUrl()
-                            .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    reference.child(pathFile).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
-                            url[y] = uri.toString();
+                            String img = uri.toString();
+                            url[y] = img;
                             y++;
 //                          databaseReference.child("Admin/"+getUserID+"/Kegiatan/ImageUrl").setValue(new ModelsImage(url));
                             Toast.makeText(TambahKegiatanActivity.this, "Upload File Berhasil", Toast.LENGTH_LONG).show();
@@ -160,8 +161,7 @@ public class TambahKegiatanActivity extends AppCompatActivity {
         }
     }
 
-    public String getfilenamefromuri(Uri filepath)
-    {
+    public String getfilenamefromuri(Uri filepath) {
         String result = null;
         if (filepath.getScheme().equals("content")) {
             Cursor cursor = getContentResolver().query(filepath, null, null, null, null);

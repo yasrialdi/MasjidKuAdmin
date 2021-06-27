@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/white">
@@ -16,7 +16,7 @@
         app:cardUseCompatPadding="true">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             tools:ignore="UseCompoundDrawables">
@@ -24,14 +24,15 @@
             <ImageView
                 android:id="@+id/itemKegiatan_Image"
                 android:layout_gravity="center"
-                android:layout_width="405dp"
+                android:layout_width="400dp"
                 android:layout_height="180dp"/>
 
             <TextView
                 android:id="@+id/itemKegiatan_Title"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:layout_gravity="center"
                 android:text="Judul"
                 android:textSize="20sp"
                 android:textStyle="bold|italic"/>

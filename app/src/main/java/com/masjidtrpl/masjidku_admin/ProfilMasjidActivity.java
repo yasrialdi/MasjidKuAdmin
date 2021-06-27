@@ -96,17 +96,16 @@ public class ProfilMasjidActivity extends AppCompatActivity {
             }
         });
 
-        if (agree.isChecked()){
-            submit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (agree.isChecked()){
                     detail();
+                } else{
+                    Toast.makeText(ProfilMasjidActivity.this, "Data sudah benar?", Toast.LENGTH_SHORT).show();
                 }
-            });
-        } else{
-            Toast.makeText(ProfilMasjidActivity.this, "Data sudah benar?", Toast.LENGTH_SHORT).show();
-        }
-
+            }
+        });
     }
 
     private void detail(){
@@ -114,6 +113,7 @@ public class ProfilMasjidActivity extends AppCompatActivity {
         String alamat = address.getText().toString();
         String kontak = contact.getText().toString();
         String deskripsi = desc.getText().toString();
+        String imgUtlProfil = imgProfil;
         String imgUrl1 = imgUrl[0];
         String imgUrl2 = imgUrl[1];
         String imgUrl3 = imgUrl[2];
@@ -121,7 +121,7 @@ public class ProfilMasjidActivity extends AppCompatActivity {
         String imgUrl5 = imgUrl[4];
 
         databaseReference.child("Admin").child(auth.getUid()).child("ProfilMasjid")
-                .setValue(new ModelsProfile(nama, alamat, kontak, deskripsi, imgProfil, imgUrl1, imgUrl2, imgUrl3, imgUrl4, imgUrl5))
+                .setValue(new ModelsProfile(nama, alamat, kontak, deskripsi, imgUtlProfil, imgUrl1, imgUrl2, imgUrl3, imgUrl4, imgUrl5))
                 .addOnSuccessListener(this, new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
@@ -215,7 +215,6 @@ public class ProfilMasjidActivity extends AppCompatActivity {
                             uploadImage(data);
                         }
                     }
-
                     break;
                 case REQ_CODE_GALLERY:
                     if (resultCode == RESULT_OK && data != null) {
@@ -234,47 +233,39 @@ public class ProfilMasjidActivity extends AppCompatActivity {
     }
 
     public void uploadImage(Intent data){
-        if(data.getClipData() != null){
+        if(data.getData() != null){
             String pathFile="";
-            int totalItemsSelected = data.getClipData().getItemCount();
-            String getUserID = auth.getCurrentUser().getUid();
+            String getUserID = auth.getUid();
 
-            for(int i = 0; i < totalItemsSelected; i++){
-                Uri fileUri = data.getClipData().getItemAt(i).getUri();
-                String fileName = getFileName(fileUri);
-                if(cekImage==0){
-                    pathFile = "Admin/"+getUserID+"/Profil/Image/Profil"+fileName;
-                } else if(cekImage==1){
-                    pathFile = "Admin/"+getUserID+"/Profil/Image/"+i+"_"+fileName;
-                }
-
-                StorageReference fileToUpload = reference.child(pathFile);
-                UploadTask uploadTask = fileToUpload.putFile(fileUri);
-                final int finalI = i;
-                String finalPathFile = pathFile;
-                uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        reference.child(finalPathFile).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-                                String url = uri.toString();
-                                if (cekImage==0){
-                                    imgProfil = url;
-                                } else if (cekImage==1){
-                                    imgUrl[x] = url;
-                                    x++;
-                                }
-                                Toast.makeText(ProfilMasjidActivity.this, "Upload File "+finalI+" Berhasil", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                });
-
+            Uri fileUri = data.getData();
+            String fileName = getFileName(fileUri);
+            if(cekImage==0){
+                pathFile = "Admin/"+getUserID+"/Profil/Profil_"+fileName;
+            } else if(cekImage==1){
+                pathFile = "Admin/"+getUserID+"/Profil/"+fileName;
             }
-            //Toast.makeText(MainActivity.this, "Selected Multiple Files", Toast.LENGTH_SHORT).show();
-        } else if (data.getData() != null){
-            Toast.makeText(ProfilMasjidActivity.this, "Selected Single File", Toast.LENGTH_SHORT).show();
+
+            StorageReference fileToUpload = reference.child(pathFile);
+            UploadTask uploadTask = fileToUpload.putFile(fileUri);
+            String finalPathFile = pathFile;
+            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    reference.child(finalPathFile).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            String url = uri.toString();
+                            if (cekImage==0){
+                                imgProfil = url;
+                            } else if (cekImage==1){
+                                imgUrl[x] = url;
+                                x++;
+                            }
+                            Toast.makeText(ProfilMasjidActivity.this, "Upload File Berhasil", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            });
         }
     }
 

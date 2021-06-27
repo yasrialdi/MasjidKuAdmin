@@ -48,8 +48,8 @@ public class AdapterKegiatan extends RecyclerView.Adapter<AdapterKegiatan.CardVi
 
     @Override
     public void onBindViewHolder(@NonNull AdapterKegiatan.CardViewHolder holder, int position) {
-        final String judul = kegiatan.get(position).getTitle();
-        final String img1 = kegiatan.get(position).getImgUrl1();
+        String judul = kegiatan.get(position).getTitle();
+        String img1 = kegiatan.get(position).getImgUrl1();
 
         Glide.with(context).load(img1).into(holder.img);
         holder.title.setText(judul);
@@ -65,6 +65,7 @@ public class AdapterKegiatan extends RecyclerView.Adapter<AdapterKegiatan.CardVi
                         switch (which){
                             case 0:
                                 Bundle bundle = new Bundle();
+                                bundle.putString("dataKey", kegiatan.get(position).getKey());
                                 bundle.putString("dataJudul", kegiatan.get(position).getTitle());
                                 bundle.putString("dataDeskripsi", kegiatan.get(position).getDesc());
                                 bundle.putString("dataImg1", kegiatan.get(position).getImgUrl1());

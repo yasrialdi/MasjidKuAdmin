@@ -100,6 +100,7 @@ public class SignInActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.getChildren() != null) {
                             ModelsName name = snapshot.getValue(ModelsName.class);
+                            assert name != null;
                             if (name.getName()!=null) {
                                 Toast.makeText(SignInActivity.this, "Login Berhasil", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(SignInActivity.this, MainMasjidActivity.class));
