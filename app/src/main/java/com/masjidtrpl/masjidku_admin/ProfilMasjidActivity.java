@@ -96,17 +96,16 @@ public class ProfilMasjidActivity extends AppCompatActivity {
             }
         });
 
-        if (agree.isChecked()){
-            submit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (agree.isChecked()){
                     detail();
+                } else{
+                    Toast.makeText(ProfilMasjidActivity.this, "Data sudah benar?", Toast.LENGTH_SHORT).show();
                 }
-            });
-        } else{
-            Toast.makeText(ProfilMasjidActivity.this, "Data sudah benar?", Toast.LENGTH_SHORT).show();
-        }
-
+            }
+        });
     }
 
     private void detail(){
@@ -215,7 +214,6 @@ public class ProfilMasjidActivity extends AppCompatActivity {
                             uploadImage(data);
                         }
                     }
-
                     break;
                 case REQ_CODE_GALLERY:
                     if (resultCode == RESULT_OK && data != null) {
@@ -267,7 +265,6 @@ public class ProfilMasjidActivity extends AppCompatActivity {
                     });
                 }
             });
-            //Toast.makeText(MainActivity.this, "Selected Multiple Files", Toast.LENGTH_SHORT).show();
         }
     }
 
