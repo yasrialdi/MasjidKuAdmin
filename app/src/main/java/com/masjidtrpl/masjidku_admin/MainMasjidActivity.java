@@ -54,6 +54,7 @@ public class MainMasjidActivity extends AppCompatActivity implements AdapterKegi
 
         laporan.setEnabled(false);
         izin.setEnabled(false);
+        review.setEnabled(false);
         getData();
 
         tambah.setOnClickListener(new View.OnClickListener() {
