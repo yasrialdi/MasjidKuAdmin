@@ -148,7 +148,8 @@ public class TambahKegiatanActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(Uri uri) {
                             String img = uri.toString();
-                            url[x-1] = img;
+                            url[y] = img;
+                            y++;
 //                          databaseReference.child("Admin/"+getUserID+"/Kegiatan/ImageUrl").setValue(new ModelsImage(url));
                             Toast.makeText(TambahKegiatanActivity.this, "Upload File Berhasil", Toast.LENGTH_LONG).show();
                         }

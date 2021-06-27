@@ -24,7 +24,7 @@
             <ImageView
                 android:id="@+id/itemKegiatan_Image"
                 android:layout_gravity="center"
-                android:layout_width="405dp"
+                android:layout_width="400dp"
                 android:layout_height="180dp"/>
 
             <TextView

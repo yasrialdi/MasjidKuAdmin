@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.ImageButton;
@@ -30,6 +31,8 @@ public class MainMasjidActivity extends AppCompatActivity implements AdapterKegi
     private DatabaseReference reference;
     private ArrayList<ModelsKegiatan> listKegiatan;
     private FirebaseAuth auth;
+
+    int doubleTapParam = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,7 +114,13 @@ public class MainMasjidActivity extends AppCompatActivity implements AdapterKegi
 
     @Override
     public void onBackPressed() {
-        finish();
-        onDestroy();
+        if (doubleTapParam == 1) {
+            this.finish();
+        }
+
+        this.doubleTapParam = 1;
+        Toast.makeText(this, "Tap sekali lagi untuk keluar", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(() -> doubleTapParam = 0, 2000);
     }
 }

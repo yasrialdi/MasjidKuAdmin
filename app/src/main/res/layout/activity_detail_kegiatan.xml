@@ -96,6 +96,16 @@
             android:layout_marginEnd="20dp"
             android:paddingLeft="10dp"/>
 
+        <Button
+            android:id="@+id/detailkegiatan_btnsubmit"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_below="@id/detailkegiatan_txtdeskripsi"
+            android:background="@drawable/submit"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="50dp"/>
+
     </RelativeLayout>
 
 </ScrollView>

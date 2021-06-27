@@ -113,6 +113,7 @@ public class ProfilMasjidActivity extends AppCompatActivity {
         String alamat = address.getText().toString();
         String kontak = contact.getText().toString();
         String deskripsi = desc.getText().toString();
+        String imgUtlProfil = imgProfil;
         String imgUrl1 = imgUrl[0];
         String imgUrl2 = imgUrl[1];
         String imgUrl3 = imgUrl[2];
@@ -120,7 +121,7 @@ public class ProfilMasjidActivity extends AppCompatActivity {
         String imgUrl5 = imgUrl[4];
 
         databaseReference.child("Admin").child(auth.getUid()).child("ProfilMasjid")
-                .setValue(new ModelsProfile(nama, alamat, kontak, deskripsi, imgProfil, imgUrl1, imgUrl2, imgUrl3, imgUrl4, imgUrl5))
+                .setValue(new ModelsProfile(nama, alamat, kontak, deskripsi, imgUtlProfil, imgUrl1, imgUrl2, imgUrl3, imgUrl4, imgUrl5))
                 .addOnSuccessListener(this, new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
