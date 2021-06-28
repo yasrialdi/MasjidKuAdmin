@@ -93,16 +93,4 @@ public class DetailKegiatanActivity extends AppCompatActivity {
                     }
                 });
     }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        AuthUI.getInstance().signOut(this).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                startActivity(new Intent(DetailKegiatanActivity.this, SignInActivity.class));
-                finish();
-            }
-        });
-    }
 }
