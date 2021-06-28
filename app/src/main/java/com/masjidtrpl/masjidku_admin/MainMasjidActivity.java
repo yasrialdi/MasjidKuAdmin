@@ -14,7 +14,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -116,7 +119,13 @@ public class MainMasjidActivity extends AppCompatActivity implements AdapterKegi
     @Override
     public void onBackPressed() {
         if (doubleTapParam == 1) {
-            this.finish();
+            AuthUI.getInstance().signOut(this).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    Toast.makeText(MainMasjidActivity.this, "Logout Berhasil!", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            });
         }
 
         this.doubleTapParam = 1;
