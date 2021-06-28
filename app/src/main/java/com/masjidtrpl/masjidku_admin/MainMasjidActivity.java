@@ -133,4 +133,16 @@ public class MainMasjidActivity extends AppCompatActivity implements AdapterKegi
 
         new Handler().postDelayed(() -> doubleTapParam = 0, 2000);
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        AuthUI.getInstance().signOut(this).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                startActivity(new Intent(MainMasjidActivity.this, SignInActivity.class));
+                finish();
+            }
+        });
+    }
 }
