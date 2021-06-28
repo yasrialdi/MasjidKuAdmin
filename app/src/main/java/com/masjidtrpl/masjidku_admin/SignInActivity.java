@@ -102,9 +102,25 @@ public class SignInActivity extends AppCompatActivity {
                             ModelsName name = snapshot.getValue(ModelsName.class);
                             assert name != null;
                             if (name.getName()!=null) {
+                                reference.child("Admin").child(auth.getUid()).child("ProfilMasjid").addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        if (snapshot.getChildren() != null) {
+                                            ModelsProfile profil = snapshot.getValue(ModelsProfile.class);
+                                            assert profil != null;startActivity(new Intent(SignInActivity.this, MainMasjidActivity.class));
+                                            finish();
+                                        } else{
+                                            startActivity(new Intent(SignInActivity.this, TambahKegiatanActivity.class));
+                                            finish();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                        Toast.makeText(SignInActivity.this, "?????", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                                 Toast.makeText(SignInActivity.this, "Login Berhasil", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(SignInActivity.this, MainMasjidActivity.class));
-                                finish();
                             }
                         } else{
                             startActivity(new Intent(SignInActivity.this, SignUpActivity.class));
@@ -146,5 +162,16 @@ public class SignInActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         finish();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        AuthUI.getInstance().signOut(this).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                finish();
+            }
+        });
     }
 }
