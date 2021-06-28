@@ -104,5 +104,6 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         startActivity(new Intent(SignUpActivity.this, SignInActivity.class));
+        finish();
     }
 }

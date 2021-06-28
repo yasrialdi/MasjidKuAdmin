@@ -308,16 +308,4 @@ public class ProfilMasjidActivity extends AppCompatActivity {
     public void onBackPressed() {
         Toast.makeText(this, "Anda harus mengisi profil terlebih dahulu", Toast.LENGTH_SHORT).show();
     }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        AuthUI.getInstance().signOut(this).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                startActivity(new Intent(ProfilMasjidActivity.this, SignInActivity.class));
-                finish();
-            }
-        });
-    }
 }

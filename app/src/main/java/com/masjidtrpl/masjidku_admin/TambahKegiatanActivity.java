@@ -224,16 +224,4 @@ public class TambahKegiatanActivity extends AppCompatActivity {
         startActivity(new Intent(TambahKegiatanActivity.this, MainMasjidActivity.class));
         finish();
     }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        AuthUI.getInstance().signOut(this).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                startActivity(new Intent(TambahKegiatanActivity.this, SignInActivity.class));
-                finish();
-            }
-        });
-    }
 }
