@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetailProfilMasjid">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <HorizontalScrollView
+            android:id="@+id/detailprofilmasjid_HorScroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="20dp">
+                <ImageView
+                    android:id="@+id/detailprofilmasjid_Image1"
+                    android:layout_width="200dp"
+                    android:layout_height="150dp"
+                    android:layout_marginEnd="10dp"/>
+                <ImageView
+                    android:id="@+id/detailprofilmasjid_Image2"
+                    android:layout_width="200dp"
+                    android:layout_height="150dp"
+                    android:layout_marginEnd="10dp"/>
+                <ImageView
+                    android:id="@+id/detailprofilmasjid_Image3"
+                    android:layout_width="200dp"
+                    android:layout_height="150dp"/>
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <ImageView
+            android:layout_width="390dp"
+            android:layout_height="500dp"
+            android:background="@drawable/kotakk"
+            android:layout_below="@id/detailprofilmasjid_HorScroll"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:id="@+id/namamasjid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/detailprofilmasjid_HorScroll"
+            android:text="Nama Masjid"
+            android:textSize="20sp"
+            android:textColor="#000"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="20dp"/>
+
+        <EditText
+            android:id="@+id/detailprofilmasjid_txtjudul"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/namamasjid"
+            android:background="@drawable/username"
+            android:textSize="18sp"
+            android:textColor="#000"
+            android:layout_marginStart="30dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="20dp"
+            android:paddingLeft="10dp"/>
+
+        <TextView
+            android:id="@+id/alamat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/detailprofilmasjid_txtjudul"
+            android:text="Alamat"
+            android:textSize="20sp"
+            android:textColor="#000"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="20dp"/>
+
+        <EditText
+            android:id="@+id/detailprofilmasjid_txtalamat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/alamat"
+            android:background="@drawable/username"
+            android:textSize="18sp"
+            android:textColor="#000"
+            android:layout_marginStart="30dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="20dp"
+            android:paddingLeft="10dp"/>
+
+        <TextView
+            android:id="@+id/notelpon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/detailprofilmasjid_txtalamat"
+            android:text="No. Telepon/Handphone"
+            android:textSize="20sp"
+            android:textColor="#000"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="20dp"/>
+
+        <EditText
+            android:id="@+id/detailprofilmasjid_notelpon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/notelpon"
+            android:background="@drawable/username"
+            android:textSize="18sp"
+            android:textColor="#000"
+            android:layout_marginStart="30dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="20dp"
+            android:paddingLeft="10dp"/>
+
+        <TextView
+            android:id="@+id/deskripsi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/detailprofilmasjid_notelpon"
+            android:text="Deskripsi"
+            android:textSize="20sp"
+            android:textColor="#000"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="20dp"/>
+
+        <EditText
+            android:id="@+id/detailprofilmasjid_txtdeskripsi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/deskripsi"
+            android:background="@drawable/username"
+            android:textSize="18sp"
+            android:textColor="#000"
+            android:layout_marginStart="30dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="20dp"
+            android:paddingLeft="10dp"/>
+
+    </RelativeLayout>
+
+</ScrollView>
