@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,12 +27,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.karumi.dexter.Dexter;
@@ -51,6 +54,7 @@ public class ProfilMasjidActivity extends AppCompatActivity {
     ImageView galery, selectedImage, profile;
     EditText name, address, contact, desc;
     CheckBox agree;
+    ProgressBar progressBar;
 
     int cekImage;
     int countImage=1;
@@ -78,6 +82,7 @@ public class ProfilMasjidActivity extends AppCompatActivity {
         galery = findViewById(R.id.profilmasjid_btnimagegaleri);
         submit = findViewById(R.id.profilmasjid_btnsubmit);
         agree = findViewById(R.id.profilmasjid_chkbox);
+        progressBar = findViewById(R.id.profilmasjid_progressBar);
         parentLinearLayout = findViewById(R.id.profilmasjid_parentLinearLayout);
 
         auth = FirebaseAuth.getInstance();
@@ -268,6 +273,19 @@ public class ProfilMasjidActivity extends AppCompatActivity {
                             Toast.makeText(ProfilMasjidActivity.this, "Upload File Berhasil", Toast.LENGTH_SHORT).show();
                         }
                     });
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    progressBar.setVisibility(View.GONE);
+                    Toast.makeText(getApplicationContext(), "uploading Gagal! -> "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                    progressBar.setVisibility(View.VISIBLE);
+                    double progress = (100.0 * snapshot.getBytesTransferred()) / snapshot.getTotalByteCount();
+                    progressBar.setProgress((int) progress);
                 }
             });
         }

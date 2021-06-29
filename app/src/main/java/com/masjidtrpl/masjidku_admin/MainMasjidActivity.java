@@ -78,7 +78,6 @@ public class MainMasjidActivity extends AppCompatActivity implements AdapterKegi
     }
 
     private void getData(){
-        Toast.makeText(this, "Mohon tunggu sebentar...", Toast.LENGTH_SHORT).show();
         reference.child("Admin").child(auth.getUid()).child("Kegiatan")
                 .addValueEventListener(new ValueEventListener() {
                     @Override
@@ -93,7 +92,6 @@ public class MainMasjidActivity extends AppCompatActivity implements AdapterKegi
                         }
                         AdapterKegiatan adapterKegiatan = new AdapterKegiatan(MainMasjidActivity.this, listKegiatan);
                         kegiatan.setAdapter(adapterKegiatan);
-                        Toast.makeText(MainMasjidActivity.this, "Data berhasil dimuat", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -123,13 +121,14 @@ public class MainMasjidActivity extends AppCompatActivity implements AdapterKegi
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     Toast.makeText(MainMasjidActivity.this, "Logout Berhasil!", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(MainMasjidActivity.this, SignInActivity.class));
                     finish();
                 }
             });
         }
 
         this.doubleTapParam = 1;
-        Toast.makeText(this, "Tap sekali lagi untuk keluar", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Tap sekali lagi untuk logout", Toast.LENGTH_SHORT).show();
 
         new Handler().postDelayed(() -> doubleTapParam = 0, 2000);
     }

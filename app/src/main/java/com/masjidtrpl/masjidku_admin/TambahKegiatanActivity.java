@@ -21,16 +21,19 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.karumi.dexter.Dexter;
@@ -51,6 +54,7 @@ public class TambahKegiatanActivity extends AppCompatActivity {
     FirebaseAuth auth;
     DatabaseReference databaseReference;
     StorageReference reference;
+    ProgressBar progressBar;
 
     String[] url = new String[3];
     int x=1;
@@ -67,6 +71,7 @@ public class TambahKegiatanActivity extends AppCompatActivity {
         deskripsi = findViewById(R.id.tambahkegiatan_editdeskripsi);
         foto = findViewById(R.id.tambahkegiatan_fotokegiatan);
         submit = findViewById(R.id.tambahkegiatan_btnsubmit);
+        progressBar = findViewById(R.id.tambahkegiatan_progressBar);
         parentLinearLayout = findViewById(R.id.tambahkegiatan_parentLinearLayout);
 
         auth = FirebaseAuth.getInstance();
@@ -154,10 +159,23 @@ public class TambahKegiatanActivity extends AppCompatActivity {
                             String img = uri.toString();
                             url[y] = img;
                             y++;
-//                          databaseReference.child("Admin/"+getUserID+"/Kegiatan/ImageUrl").setValue(new ModelsImage(url));
+                            progressBar.setVisibility(View.GONE);
                             Toast.makeText(TambahKegiatanActivity.this, "Upload File Berhasil", Toast.LENGTH_LONG).show();
                         }
                     });
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    progressBar.setVisibility(View.GONE);
+                    Toast.makeText(getApplicationContext(), "uploading Gagal! -> "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                    progressBar.setVisibility(View.VISIBLE);
+                    double progress = (100.0 * snapshot.getBytesTransferred()) / snapshot.getTotalByteCount();
+                    progressBar.setProgress((int) progress);
                 }
             });
         } else{
