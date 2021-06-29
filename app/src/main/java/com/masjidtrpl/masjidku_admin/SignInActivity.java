@@ -38,7 +38,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Collections;
 
 public class SignInActivity extends AppCompatActivity {
-    private Button login, register, google;
+    private Button login, register;
     private EditText user, pass;
     private FirebaseAuth auth;
     private FirebaseAuth.AuthStateListener listener;
@@ -65,17 +65,6 @@ public class SignInActivity extends AppCompatActivity {
             finish();
         });
 
-        google.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivityForResult(AuthUI.getInstance()
-                        .createSignInIntentBuilder()
-                        .setAvailableProviders(Collections.singletonList(new AuthUI.IdpConfig.GoogleBuilder().build()))
-                        .setIsSmartLockEnabled(false).build(),RC_SIGN_IN);
-                Toast.makeText(SignInActivity.this, "Loading!!!!", Toast.LENGTH_LONG).show();
-            }
-        });
-
         login.setOnClickListener(v -> {
             getEmail = user.getText().toString();
             getPass = pass.getText().toString();
@@ -87,59 +76,6 @@ public class SignInActivity extends AppCompatActivity {
                 Toast.makeText(this, "Loading!!!", Toast.LENGTH_LONG).show();
             }
         });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        // RC_SIGN_IN adalah kode permintaan yang Anda berikan ke startActivityForResult, saat memulai masuknya arus.
-        if (requestCode == RC_SIGN_IN) {
-            if (resultCode == RESULT_OK) {
-                reference.child("Admin").child(auth.getUid()).child("Nama").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.getChildren() != null) {
-                            ModelsName name = snapshot.getValue(ModelsName.class);
-                            assert name != null;
-                            if (name.getName()!=null) {
-                                reference.child("Admin").child(auth.getUid()).child("ProfilMasjid").addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        if (snapshot.getChildren() != null) {
-                                            ModelsProfile profil = snapshot.getValue(ModelsProfile.class);
-                                            assert profil != null;startActivity(new Intent(SignInActivity.this, MainMasjidActivity.class));
-                                            finish();
-                                        } else{
-                                            startActivity(new Intent(SignInActivity.this, TambahKegiatanActivity.class));
-                                            finish();
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {
-                                        Toast.makeText(SignInActivity.this, "?????", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                                Toast.makeText(SignInActivity.this, "Login Berhasil", Toast.LENGTH_SHORT).show();
-                            }
-                        } else{
-                            startActivity(new Intent(SignInActivity.this, SignUpActivity.class));
-                            finish();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        Toast.makeText(SignInActivity.this, "?????", Toast.LENGTH_SHORT).show();
-                    }
-                });
-//                Toast.makeText(SignInActivity.this, "Login Berhasil", Toast.LENGTH_SHORT).show();
-//                startActivity(new Intent(SignInActivity.this, MainMasjidActivity.class));
-//                finish();
-            } else {
-                Toast.makeText(SignInActivity.this, "Login Dibatalkan", Toast.LENGTH_SHORT).show();
-            }
-        }
     }
 
     private void loginUser() {
@@ -161,11 +97,6 @@ public class SignInActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        AuthUI.getInstance().signOut(this).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                finish();
-            }
-        });
+        finish();
     }
 }

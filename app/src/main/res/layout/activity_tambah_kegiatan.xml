@@ -114,13 +114,26 @@
             </LinearLayout>
         </HorizontalScrollView>
 
+        <ProgressBar
+            android:id="@+id/tambahkegiatan_progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/scroll"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:max="100"
+            android:progress="0"
+            android:visibility="gone" />
+
         <Button
             android:id="@+id/tambahkegiatan_btnsubmit"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
-            android:layout_below="@id/scroll"
+            android:layout_below="@id/tambahkegiatan_progressBar"
             android:background="@drawable/submit"
-            android:layout_marginLeft="25dp"
+            android:layout_marginStart="25dp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="50dp"/>
 
