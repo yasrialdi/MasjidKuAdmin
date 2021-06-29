@@ -53,7 +53,7 @@ public class SignInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_in);
         login = findViewById(R.id.signin_signin);
         register = findViewById(R.id.signin_signup);
-        google = findViewById(R.id.signin_google);
+
         user = findViewById(R.id.signin_username);
         pass = findViewById(R.id.signin_password);
 
