@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetailProfilMasjid">
+    tools:context=".DetailProfilMasjidActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -20,21 +20,78 @@
                 android:orientation="horizontal"
                 android:padding="20dp">
                 <ImageView
+                    android:id="@+id/detailprofilmasjid_ImageProfile"
+                    android:layout_width="200dp"
+                    android:layout_height="150dp"
+                    android:layout_marginEnd="10dp"
+                    android:visibility="gone"/>
+                <ImageView
                     android:id="@+id/detailprofilmasjid_Image1"
                     android:layout_width="200dp"
                     android:layout_height="150dp"
-                    android:layout_marginEnd="10dp"/>
+                    android:layout_marginEnd="10dp"
+                    android:visibility="gone"/>
                 <ImageView
                     android:id="@+id/detailprofilmasjid_Image2"
                     android:layout_width="200dp"
                     android:layout_height="150dp"
-                    android:layout_marginEnd="10dp"/>
+                    android:layout_marginEnd="10dp"
+                    android:visibility="gone"/>
                 <ImageView
                     android:id="@+id/detailprofilmasjid_Image3"
                     android:layout_width="200dp"
-                    android:layout_height="150dp"/>
+                    android:layout_height="150dp"
+                    android:layout_marginEnd="10dp"
+                    android:visibility="gone"/>
+                <ImageView
+                    android:id="@+id/detailprofilmasjid_Image4"
+                    android:layout_width="200dp"
+                    android:layout_height="150dp"
+                    android:layout_marginEnd="10dp"
+                    android:visibility="gone"/>
+                <ImageView
+                    android:id="@+id/detailprofilmasjid_Image5"
+                    android:layout_width="200dp"
+                    android:layout_height="150dp"
+                    android:visibility="gone"/>
             </LinearLayout>
         </HorizontalScrollView>
+
+        <TextView
+            android:id="@+id/detailprofilmasjid_key"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+        <TextView
+            android:id="@+id/detailprofilmasjid_txtprofil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+        <TextView
+            android:id="@+id/detailprofilmasjid_txtimg1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+        <TextView
+            android:id="@+id/detailprofilmasjid_txtimg2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+        <TextView
+            android:id="@+id/detailprofilmasjid_txtimg3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+        <TextView
+            android:id="@+id/detailprofilmasjid_txtimg4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+        <TextView
+            android:id="@+id/detailprofilmasjid_txtimg5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
 
         <ImageView
             android:layout_width="390dp"
@@ -144,6 +201,16 @@
             android:layout_marginBottom="20dp"
             android:layout_marginEnd="20dp"
             android:paddingLeft="10dp"/>
+
+        <Button
+            android:id="@+id/detailprofilmasjid_btnsubmit"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_below="@id/detailprofilmasjid_txtdeskripsi"
+            android:background="@drawable/submit"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="50dp"/>
 
     </RelativeLayout>
 

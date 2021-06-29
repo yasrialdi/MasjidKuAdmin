@@ -1,6 +1,7 @@
 package com.masjidtrpl.masjidku_admin;
 
 public class ModelsProfile {
+    private String key;
     private String name;
     private String address;
     private String contact;
@@ -23,6 +24,18 @@ public class ModelsProfile {
         this.imgUrl3 = imgUrl3;
         this.imgUrl4 = imgUrl4;
         this.imgUrl5 = imgUrl5;
+    }
+
+    public ModelsProfile() {
+
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getName() {

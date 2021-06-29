@@ -9,9 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
@@ -28,7 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class MainMasjidActivity extends AppCompatActivity implements AdapterKegiatan.dataListener{
-    ImageButton tambah, review, izin, laporan;
+    ImageButton profil, tambah, review, izin, laporan;
     RecyclerView kegiatan;
 
     private DatabaseReference reference;
@@ -41,6 +39,7 @@ public class MainMasjidActivity extends AppCompatActivity implements AdapterKegi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_masjid);
+        profil = findViewById(R.id.mainmasjid_profilmasjid);
         tambah = findViewById(R.id.mainmasjid_tambahkegiatan);
         review = findViewById(R.id.mainmasjid_review);
         izin = findViewById(R.id.mainmasjid_izinpenggunaan);
@@ -59,6 +58,14 @@ public class MainMasjidActivity extends AppCompatActivity implements AdapterKegi
         izin.setEnabled(false);
         review.setEnabled(false);
         getData();
+
+        profil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainMasjidActivity.this, DetailProfilMasjidActivity.class));
+                finish();
+            }
+        });
 
         tambah.setOnClickListener(new View.OnClickListener() {
             @Override
