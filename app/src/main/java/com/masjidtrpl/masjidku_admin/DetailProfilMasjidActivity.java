@@ -66,42 +66,46 @@ public class DetailProfilMasjidActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         ModelsProfile modelsProfile = snapshot.getValue(ModelsProfile.class);
-                        assert modelsProfile != null;
-                        modelsProfile.setKey(snapshot.getKey());
-                        key.setText(modelsProfile.getKey());
-                        judul.setText(modelsProfile.getName());
-                        alamat.setText(modelsProfile.getAddress());
-                        kontak.setText(modelsProfile.getContact());
-                        deskripsi.setText(modelsProfile.getDesc());
-                        if (modelsProfile.getImgProfil() != null){
-                            imgprofile.setVisibility(View.VISIBLE);
-                            txtprofil.setText(modelsProfile.getImgProfil());
-                            Glide.with(DetailProfilMasjidActivity.this).load(modelsProfile.getImgProfil()).into(imgprofile);
-                        }
-                        if (modelsProfile.getImgUrl1() != null){
-                            img1.setVisibility(View.VISIBLE);
-                            txtimg1.setText(modelsProfile.getImgUrl1());
-                            Glide.with(DetailProfilMasjidActivity.this).load(modelsProfile.getImgUrl1()).into(img1);
-                        }
-                        if (modelsProfile.getImgUrl2() != null){
-                            img1.setVisibility(View.VISIBLE);
-                            txtimg1.setText(modelsProfile.getImgUrl2());
-                            Glide.with(DetailProfilMasjidActivity.this).load(modelsProfile.getImgUrl2()).into(img2);
-                        }
-                        if (modelsProfile.getImgUrl3() != null){
-                            img1.setVisibility(View.VISIBLE);
-                            txtimg1.setText(modelsProfile.getImgUrl3());
-                            Glide.with(DetailProfilMasjidActivity.this).load(modelsProfile.getImgUrl3()).into(img3);
-                        }
-                        if (modelsProfile.getImgUrl4() != null){
-                            img1.setVisibility(View.VISIBLE);
-                            txtimg1.setText(modelsProfile.getImgUrl4());
-                            Glide.with(DetailProfilMasjidActivity.this).load(modelsProfile.getImgUrl4()).into(img4);
-                        }
-                        if (modelsProfile.getImgUrl5() != null){
-                            img1.setVisibility(View.VISIBLE);
-                            txtimg1.setText(modelsProfile.getImgUrl5());
-                            Glide.with(DetailProfilMasjidActivity.this).load(modelsProfile.getImgUrl5()).into(img5);
+                        if (modelsProfile == null){
+                            startActivity(new Intent(DetailProfilMasjidActivity.this, ProfilMasjidActivity.class));
+                            finish();
+                        } else{
+                            modelsProfile.setKey(snapshot.getKey());
+                            key.setText(modelsProfile.getKey());
+                            judul.setText(modelsProfile.getName());
+                            alamat.setText(modelsProfile.getAddress());
+                            kontak.setText(modelsProfile.getContact());
+                            deskripsi.setText(modelsProfile.getDesc());
+                            if (modelsProfile.getImgProfil() != null){
+                                imgprofile.setVisibility(View.VISIBLE);
+                                txtprofil.setText(modelsProfile.getImgProfil());
+                                Glide.with(DetailProfilMasjidActivity.this).load(modelsProfile.getImgProfil()).placeholder(R.drawable.fotomasjid).into(imgprofile);
+                            }
+                            if (modelsProfile.getImgUrl1() != null){
+                                img1.setVisibility(View.VISIBLE);
+                                txtimg1.setText(modelsProfile.getImgUrl1());
+                                Glide.with(DetailProfilMasjidActivity.this).load(modelsProfile.getImgUrl1()).placeholder(R.drawable.fotomasjid).into(img1);
+                            }
+                            if (modelsProfile.getImgUrl2() != null){
+                                img1.setVisibility(View.VISIBLE);
+                                txtimg1.setText(modelsProfile.getImgUrl2());
+                                Glide.with(DetailProfilMasjidActivity.this).load(modelsProfile.getImgUrl2()).placeholder(R.drawable.fotomasjid).into(img2);
+                            }
+                            if (modelsProfile.getImgUrl3() != null){
+                                img1.setVisibility(View.VISIBLE);
+                                txtimg1.setText(modelsProfile.getImgUrl3());
+                                Glide.with(DetailProfilMasjidActivity.this).load(modelsProfile.getImgUrl3()).placeholder(R.drawable.fotomasjid).into(img3);
+                            }
+                            if (modelsProfile.getImgUrl4() != null){
+                                img1.setVisibility(View.VISIBLE);
+                                txtimg1.setText(modelsProfile.getImgUrl4());
+                                Glide.with(DetailProfilMasjidActivity.this).load(modelsProfile.getImgUrl4()).placeholder(R.drawable.fotomasjid).into(img4);
+                            }
+                            if (modelsProfile.getImgUrl5() != null){
+                                img1.setVisibility(View.VISIBLE);
+                                txtimg1.setText(modelsProfile.getImgUrl5());
+                                Glide.with(DetailProfilMasjidActivity.this).load(modelsProfile.getImgUrl5()).placeholder(R.drawable.fotomasjid).into(img5);
+                            }
                         }
                     }
 

@@ -51,7 +51,7 @@ public class AdapterKegiatan extends RecyclerView.Adapter<AdapterKegiatan.CardVi
         String judul = kegiatan.get(position).getTitle();
         String img1 = kegiatan.get(position).getImgUrl1();
 
-        Glide.with(context).load(img1).into(holder.img);
+        Glide.with(context).load(img1).placeholder(R.drawable.fotomasjid).into(holder.img);
         holder.title.setText(judul);
 
         holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {

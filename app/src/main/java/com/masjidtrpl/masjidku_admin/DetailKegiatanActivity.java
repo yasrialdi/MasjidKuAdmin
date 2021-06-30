@@ -54,9 +54,9 @@ public class DetailKegiatanActivity extends AppCompatActivity {
             bundle = getIntent().getExtras();
             judul.setText(bundle.getString("dataJudul"));
             deskripsi.setText(bundle.getString("dataDeskripsi"));
-            Glide.with(DetailKegiatanActivity.this).load(bundle.getString("dataImg1")).into(img1);
-            Glide.with(DetailKegiatanActivity.this).load(bundle.getString("dataImg2")).into(img2);
-            Glide.with(DetailKegiatanActivity.this).load(bundle.getString("dataImg3")).into(img3);
+            Glide.with(DetailKegiatanActivity.this).load(bundle.getString("dataImg1")).placeholder(R.drawable.fotomasjid).into(img1);
+            Glide.with(DetailKegiatanActivity.this).load(bundle.getString("dataImg2")).placeholder(R.drawable.fotomasjid).into(img2);
+            Glide.with(DetailKegiatanActivity.this).load(bundle.getString("dataImg3")).placeholder(R.drawable.fotomasjid).into(img3);
 
             submit.setOnClickListener(new View.OnClickListener() {
                 @Override
