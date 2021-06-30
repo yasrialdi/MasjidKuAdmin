@@ -73,7 +73,6 @@ public class SignInActivity extends AppCompatActivity {
                 Toast.makeText(SignInActivity.this, "Email atau sandi tidak boleh kosong", Toast.LENGTH_SHORT).show();
             } else{
                 loginUser();
-                Toast.makeText(this, "Loading!!!", Toast.LENGTH_LONG).show();
             }
         });
     }

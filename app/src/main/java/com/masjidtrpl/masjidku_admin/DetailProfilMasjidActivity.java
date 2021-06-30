@@ -104,7 +104,7 @@ public class DetailProfilMasjidActivity extends AppCompatActivity {
                             if (modelsProfile.getImgUrl5() != null){
                                 img1.setVisibility(View.VISIBLE);
                                 txtimg1.setText(modelsProfile.getImgUrl5());
-                                Glide.with(DetailProfilMasjidActivity.this).load(modelsProfile.getImgUrl5()).placeholder(R.drawable.fotomasjid).into(img5);
+                            Glide.with(DetailProfilMasjidActivity.this).load(modelsProfile.getImgUrl5()).placeholder(R.drawable.fotomasjid).into(img5);
                             }
                         }
                     }
