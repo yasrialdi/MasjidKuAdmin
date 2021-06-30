@@ -54,9 +54,18 @@ public class DetailKegiatanActivity extends AppCompatActivity {
             bundle = getIntent().getExtras();
             judul.setText(bundle.getString("dataJudul"));
             deskripsi.setText(bundle.getString("dataDeskripsi"));
-            Glide.with(DetailKegiatanActivity.this).load(bundle.getString("dataImg1")).placeholder(R.drawable.fotomasjid).into(img1);
-            Glide.with(DetailKegiatanActivity.this).load(bundle.getString("dataImg2")).placeholder(R.drawable.fotomasjid).into(img2);
-            Glide.with(DetailKegiatanActivity.this).load(bundle.getString("dataImg3")).placeholder(R.drawable.fotomasjid).into(img3);
+            if (!bundle.getString("dataImg1").equals("")){
+                img1.setVisibility(View.VISIBLE);
+                Glide.with(DetailKegiatanActivity.this).load(bundle.getString("dataImg1")).placeholder(R.drawable.fotomasjid).into(img1);
+            }
+            if (!bundle.getString("dataImg2").equals("")){
+                img2.setVisibility(View.VISIBLE);
+                Glide.with(DetailKegiatanActivity.this).load(bundle.getString("dataImg2")).placeholder(R.drawable.fotomasjid).into(img2);
+            }
+            if (!bundle.getString("dataImg3").equals("")){
+                img3.setVisibility(View.VISIBLE);
+                Glide.with(DetailKegiatanActivity.this).load(bundle.getString("dataImg3")).placeholder(R.drawable.fotomasjid).into(img3);
+            }
 
             submit.setOnClickListener(new View.OnClickListener() {
                 @Override
