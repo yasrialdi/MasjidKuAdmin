@@ -45,8 +45,11 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".SignUpActivity" />
-        <activity android:name=".SignInActivity" />
+        <activity android:name=".SignUpActivity"
+            android:windowSoftInputMode="adjustResize"/>
+
+        <activity android:name=".SignInActivity"
+            android:windowSoftInputMode="adjustResize"/>
     </application>
 
 </manifest>
