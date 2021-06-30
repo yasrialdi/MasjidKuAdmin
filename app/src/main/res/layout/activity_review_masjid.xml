@@ -8,9 +8,57 @@
     tools:context=".ReviewMasjidActivity"
     android:background="@color/white">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/reviewMasjid_recycler"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/reviewMasjid_recycler"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+        <ImageButton
+            android:id="@+id/reviewmasjid_btn1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/reviewMasjid_recycler"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/review1"
+            android:layout_centerHorizontal="true"/>
+
+        <ImageButton
+            android:id="@+id/reviewmasjid_btn2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/reviewmasjid_btn1"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/review2"
+            android:layout_centerHorizontal="true"/>
+
+        <ImageButton
+            android:id="@+id/reviewmasjid_btn3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/reviewmasjid_btn2"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/review3"
+            android:layout_centerHorizontal="true"/>
+
+        <ImageButton
+            android:id="@+id/reviewmasjid_btn4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/reviewmasjid_btn3"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/review4"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="30dp"/>
+
+    </RelativeLayout>
+
+
 
 </LinearLayout>
