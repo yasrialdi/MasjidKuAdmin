@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".IzinPenggunaanActivity"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="370dp"
+            android:layout_height="650dp"
+            android:background="@drawable/kotakk"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"/>
+
+        <ImageButton
+            android:id="@+id/izinpenggunaan_btn1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btnizin1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"/>
+
+        <ImageButton
+            android:id="@+id/izinpenggunaan_btn2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btnizin2"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/izinpenggunaan_btn1"
+            android:layout_marginTop="20dp"/>
+
+        <ImageButton
+            android:id="@+id/izinpenggunaan_btn3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btnizin3"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/izinpenggunaan_btn2"
+            android:layout_marginTop="20dp"/>
+
+        <ImageButton
+            android:id="@+id/izinpenggunaan_btn4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btnizin4"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/izinpenggunaan_btn3"
+            android:layout_marginTop="20dp"/>
+
+        <ImageButton
+            android:id="@+id/izinpenggunaan_btn5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btnizin5"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/izinpenggunaan_btn4"
+            android:layout_marginTop="20dp"/>
+
+        <ImageButton
+            android:id="@+id/izinpenggunaan_btn6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btnizin6"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/izinpenggunaan_btn5"
+            android:layout_marginTop="20dp"/>
+
+    </RelativeLayout>
+
+</ScrollView>

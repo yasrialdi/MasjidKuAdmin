@@ -19,6 +19,7 @@
         android:roundIcon="@drawable/logomasjidku"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".IzinPenggunaanActivity"></activity>
         <activity android:name=".SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -45,7 +46,7 @@
             android:value="@string/google_maps_key" />
 
         <activity android:name=".SignUpActivity" />
-        <activity android:name=".SignInActivity"/>
+        <activity android:name=".SignInActivity" />
     </application>
 
 </manifest>

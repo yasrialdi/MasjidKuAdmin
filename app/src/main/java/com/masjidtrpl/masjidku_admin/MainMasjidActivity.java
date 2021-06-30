@@ -52,7 +52,6 @@ public class MainMasjidActivity extends AppCompatActivity implements AdapterKegi
         tambah = findViewById(R.id.mainmasjid_tambahkegiatan);
         review = findViewById(R.id.mainmasjid_review);
         izin = findViewById(R.id.mainmasjid_izinpenggunaan);
-        laporan = findViewById(R.id.mainmasjid_laporankeuangan);
         kegiatan = findViewById(R.id.mainmasjid_fotokegiatan);
 
 
