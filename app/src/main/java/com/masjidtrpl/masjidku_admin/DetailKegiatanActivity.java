@@ -54,15 +54,19 @@ public class DetailKegiatanActivity extends AppCompatActivity {
             bundle = getIntent().getExtras();
             judul.setText(bundle.getString("dataJudul"));
             deskripsi.setText(bundle.getString("dataDeskripsi"));
-            if (!bundle.getString("dataImg1").equals("")){
+            ModelsKegiatan mdl = new ModelsKegiatan();
+            mdl.setImgUrl1(bundle.getString("dataImg1"));
+            mdl.setImgUrl2(bundle.getString("dataImg2"));
+            mdl.setImgUrl3(bundle.getString("dataImg3"));
+            if (mdl.getImgUrl1() != null){
                 img1.setVisibility(View.VISIBLE);
                 Glide.with(DetailKegiatanActivity.this).load(bundle.getString("dataImg1")).placeholder(R.drawable.fotomasjid).into(img1);
             }
-            if (!bundle.getString("dataImg2").equals("")){
+            if (mdl.getImgUrl2() != null){
                 img2.setVisibility(View.VISIBLE);
                 Glide.with(DetailKegiatanActivity.this).load(bundle.getString("dataImg2")).placeholder(R.drawable.fotomasjid).into(img2);
             }
-            if (!bundle.getString("dataImg3").equals("")){
+            if (mdl.getImgUrl3() != null){
                 img3.setVisibility(View.VISIBLE);
                 Glide.with(DetailKegiatanActivity.this).load(bundle.getString("dataImg3")).placeholder(R.drawable.fotomasjid).into(img3);
             }

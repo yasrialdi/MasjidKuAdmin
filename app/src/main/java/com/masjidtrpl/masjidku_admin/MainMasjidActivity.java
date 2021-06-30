@@ -35,7 +35,7 @@ import com.karumi.dexter.listener.single.PermissionListener;
 import java.util.ArrayList;
 
 public class MainMasjidActivity extends AppCompatActivity implements AdapterKegiatan.dataListener{
-    ImageButton profil, tambah, review, izin, laporan;
+    ImageButton profil, tambah, review, izin;
     RecyclerView kegiatan;
 
     private DatabaseReference reference;
@@ -65,9 +65,15 @@ public class MainMasjidActivity extends AppCompatActivity implements AdapterKegi
             kegiatan.setLayoutManager(horizontalLayoutManager);
             kegiatan.setHasFixedSize(true);
 
-            laporan.setEnabled(false);
-            izin.setEnabled(false);
             getData();
+
+            izin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(MainMasjidActivity.this, IzinPenggunaanActivity.class));
+                    finish();
+                }
+            });
 
             profil.setOnClickListener(new View.OnClickListener() {
                 @Override
