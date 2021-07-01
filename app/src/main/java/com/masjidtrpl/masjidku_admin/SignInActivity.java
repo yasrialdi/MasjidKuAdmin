@@ -41,8 +41,6 @@ public class SignInActivity extends AppCompatActivity {
     private Button login, register;
     private EditText user, pass;
     private FirebaseAuth auth;
-    private FirebaseAuth.AuthStateListener listener;
-    private DatabaseReference reference;
     private String getEmail, getPass;
 
     private final int RC_SIGN_IN = 1;
@@ -58,7 +56,6 @@ public class SignInActivity extends AppCompatActivity {
         pass = findViewById(R.id.signin_password);
 
         auth = FirebaseAuth.getInstance();
-        reference = FirebaseDatabase.getInstance().getReference();
 
         register.setOnClickListener(v -> {
             startActivity(new Intent(SignInActivity.this, SignUpActivity.class));
