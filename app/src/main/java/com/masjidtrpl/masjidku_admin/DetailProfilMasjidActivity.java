@@ -149,6 +149,7 @@ public class DetailProfilMasjidActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(getApplicationContext(), "Data berhasil diubah!", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(DetailProfilMasjidActivity.this, MainMasjidActivity.class));
                         finish();
                     }
                 });
